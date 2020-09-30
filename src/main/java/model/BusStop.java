@@ -20,7 +20,7 @@ public class BusStop {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BusStop busStop = (BusStop) o;
-        return (Lng.equals(busStop.Lng)) &&
+        return Lng.equals(busStop.Lng) &&
                Lat.equals(busStop.Lat) &&
                 directionId.equals(busStop.directionId)&&
                 busName.equals(busStop.busName);

@@ -23,6 +23,7 @@ public class BusStopReader {
         }
     }
     public List<BusStop> getBusStops() {
+        getBusStopData();
         return busStops;
     }
 }
