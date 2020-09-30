@@ -4,20 +4,25 @@ package reader;
 import model.BusStop;
 
 import java.io.IOException;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+
 
 public class BusStopReader {
     private final String filePath = "/resources/espacios-culturales.csv";
     private final List<String[]> busStopData;
-    private Set<BusStop> busStops = new HashSet<>();
+    private final List<BusStop> busStops = new ArrayList<>();
     public BusStopReader() throws IOException {
         ReadResources  resources = new ReadResources(filePath);
         busStopData = resources.gettingFileReady();
     }
-
-    public Set<BusStop> getBusStops() {
+    private void getBusStopData(){
+        for (String[] row:
+             busStopData) {
+            busStops.add(new BusStop(row[4],row[3],row[5],row[8]));
+        }
+    }
+    public List<BusStop> getBusStops() {
         return busStops;
     }
 }
