@@ -9,7 +9,7 @@ import java.util.List;
 
 
 public class BusStopReader {
-    private final String filePath = "/resources/espacios-culturales.csv";
+    private final String filePath = "src/main/resources/paradas-de-colectivos.csv";
     private final List<String[]> busStopData;
     private final List<BusStop> busStops = new ArrayList<>();
     public BusStopReader() throws IOException {
