@@ -1,9 +1,11 @@
+import java.io.IOException;
+
 import static spark.Spark.*;
 import static utils.Json.json;
 
 public class Start {
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws IOException {
     Controller controller = new Controller();
     cors();
     after((req, res) -> res.type("application/json"));

@@ -22,7 +22,7 @@ public class BusStop {
         BusStop busStop = (BusStop) o;
         return Lng.equals(busStop.Lng) &&
                Lat.equals(busStop.Lat) &&
-                (directionId== busStop.directionId)&&
+                (directionId.equals(busStop.directionId))&&
                 busName.equals(busStop.busName);
     }
 

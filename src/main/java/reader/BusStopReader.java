@@ -9,7 +9,7 @@ import java.util.List;
 
 
 public class BusStopReader {
-    private final String filePath = "src/main/resources/paradas-de-colectivos.csv";
+    private final String filePath = "src/main/resources/paradas-de-colectivo.csv";
     private final List<String[]> busStopData;
     private final List<BusStop> busStops = new ArrayList<>();
 
@@ -17,14 +17,9 @@ public class BusStopReader {
         ReadResources  resources = new ReadResources(filePath);
         busStopData = resources.gettingFileReady();
     }
-    private void getBusStopData(){
-        for (String[] row:
-             busStopData) {
-            busStops.add(new BusStop(row[4],row[3],row[5],row[8]));
-        }
-    }
+
     public List<BusStop> getBusStops() {
-        getBusStopData();
+        busStopData.forEach(b -> busStops.add(new BusStop(Double.parseDouble(b[4]), Double.parseDouble(b[3]), Integer.parseInt(b[5]), b[8])));
         return busStops;
     }
 }
