@@ -3,12 +3,12 @@ package model;
 import java.util.Objects;
 
 public class BusStop {
-    private final String Lng;
-    private final String Lat;
-    private final String directionId;
+    private final Double Lng;
+    private final Double Lat;
+    private final Integer directionId;
     private final String busName;
 
-    public BusStop(String lng, String lat, String directionId, String busName) {
+    public BusStop(Double lng, Double lat, Integer directionId, String busName) {
         Lng = lng;
         Lat = lat;
         this.directionId = directionId;
@@ -22,7 +22,7 @@ public class BusStop {
         BusStop busStop = (BusStop) o;
         return Lng.equals(busStop.Lng) &&
                Lat.equals(busStop.Lat) &&
-                directionId.equals(busStop.directionId)&&
+                (directionId== busStop.directionId)&&
                 busName.equals(busStop.busName);
     }
 
