@@ -4,10 +4,12 @@ public class PlaceLocation implements Comparable<PlaceLocation>{
 
   private double lat;
   private double lng;
-  private String name;
+  private final String name;
 
-  public PlaceLocation(String name) {
+  public PlaceLocation(String name/*, double lat, double lng*/) {
     this.name = name;
+//    this.lat = lat;
+//    this.lng = lng;
   }
 
   public double getLat() {
@@ -19,6 +21,11 @@ public class PlaceLocation implements Comparable<PlaceLocation>{
   }
 
   public String getName() {
+    return name;
+  }
+
+  @Override
+  public String toString() {
     return name;
   }
 

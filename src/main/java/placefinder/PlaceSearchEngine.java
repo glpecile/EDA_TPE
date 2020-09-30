@@ -3,12 +3,15 @@ package placefinder;
 import model.PlaceLocation;
 
 import java.util.Comparator;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class PlaceSearchEngine {
 
-    public static Set<RankedPlaceLocation> getSimilarity(Iterable<PlaceLocation> placeLocations, String place) {
+    public static List<PlaceLocation> getSimilarity(Iterable<PlaceLocation> placeLocations, String place) {
         TreeSet<RankedPlaceLocation> rankedPlaceLocationSet = new TreeSet<>();
 
         QGram qGram = new QGram(3);
@@ -25,6 +28,6 @@ public class PlaceSearchEngine {
             }
         }
 
-        return rankedPlaceLocationSet;
+        return rankedPlaceLocationSet.stream().map(RankedPlaceLocation::getPlaceLocation).collect(Collectors.toList());
     }
 }

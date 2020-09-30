@@ -2,6 +2,7 @@ package placefinder;
 
 import model.PlaceLocation;
 
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -23,12 +24,15 @@ public class Main {
         locations.add(new PlaceLocation("MUSEO FOTOGRAFICO SIMIK"));
         locations.add(new PlaceLocation("MUSEO ANCONETANI DEL ACORDEON"));
         locations.add(new PlaceLocation("ESPACIO CULTURAL CARLOS GARDEL"));
+        locations.add(new PlaceLocation("ESPUCIO CULTURAL CARLOS GARDEL"));
+        locations.add(new PlaceLocation("PALACIO BAROLO"));
 
-        Set<RankedPlaceLocation> ranking = PlaceSearchEngine.getSimilarity(locations, "MUSEO");
-        ranking.forEach(System.out::println);
-        System.out.println("--------------------");
-        Set<RankedPlaceLocation> ranking2 = PlaceSearchEngine.getSimilarity(locations, "CARLOS GARDEL");
-        ranking2.forEach(System.out::println);
+
+//        Set<RankedPlaceLocation> ranking = PlaceSearchEngine.getSimilarity(locations, "MUSEO");
+//        ranking.forEach(System.out::println);
+//        System.out.println("--------------------");
+            List<PlaceLocation> ranking2 = PlaceSearchEngine.getSimilarity(locations, "BALORO");
+            ranking2.forEach(System.out::println);
 
 
     }
