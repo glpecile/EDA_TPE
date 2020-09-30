@@ -2,14 +2,18 @@ package model;
 
 public class PlaceLocation implements Comparable<PlaceLocation>{
 
-  private double lat;
-  private double lng;
+  private final double lat;
+  private final double lng;
   private final String name;
 
-  public PlaceLocation(String name/*, double lat, double lng*/) {
+  public PlaceLocation(String name, double lat, double lng) {
     this.name = name;
-//    this.lat = lat;
-//    this.lng = lng;
+    this.lat = lat;
+    this.lng = lng;
+  }
+
+  public PlaceLocation(String name) {
+    this(name,0,0);
   }
 
   public double getLat() {
@@ -21,11 +25,6 @@ public class PlaceLocation implements Comparable<PlaceLocation>{
   }
 
   public String getName() {
-    return name;
-  }
-
-  @Override
-  public String toString() {
     return name;
   }
 

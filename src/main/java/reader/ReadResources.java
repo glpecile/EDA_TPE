@@ -18,10 +18,9 @@ public class ReadResources {
 
     public List<String[]> gettingFileReady() throws IOException {
         FileReader filereader = new FileReader(filePath);
-        CSVParser parser = new CSVParserBuilder().withSeparator(';').build();
+        CSVParser parser = new CSVParserBuilder().withSeparator(',').build();
         CSVReader csvReader = new CSVReaderBuilder(filereader).withSkipLines(1).withCSVParser(parser).build();
-        List<String[]> allData = csvReader.readAll();
-        return allData;
+        return csvReader.readAll();
     }
 
 }
