@@ -1,6 +1,4 @@
-package placefinder;
-
-import model.PlaceLocation;
+package model;
 
 public class RankedPlaceLocation implements Comparable<RankedPlaceLocation> {
     private final PlaceLocation placeLocation;

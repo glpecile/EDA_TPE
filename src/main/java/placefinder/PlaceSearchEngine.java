@@ -1,12 +1,10 @@
 package placefinder;
 
 import model.PlaceLocation;
+import model.RankedPlaceLocation;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 import java.util.TreeSet;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class PlaceSearchEngine {

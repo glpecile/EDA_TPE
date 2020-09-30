@@ -26,14 +26,23 @@ public class Main {
         locations.add(new PlaceLocation("ESPACIO CULTURAL CARLOS GARDEL"));
         locations.add(new PlaceLocation("ESPUCIO CULTURAL CARLOS GARDEL"));
         locations.add(new PlaceLocation("PALACIO BAROLO"));
+        locations.add(new PlaceLocation("BAR SUR"));
+        locations.add(new PlaceLocation("BANCO BAR"));
+        locations.add(new PlaceLocation("BAHIA"));
+        locations.add(new PlaceLocation("BADARADO DISTRIBUIDOR"));
+        locations.add(new PlaceLocation("BORDER"));
+        locations.add(new PlaceLocation("BAUTISTA"));
+        locations.add(new PlaceLocation("BETA SUR"));
+        locations.add(new PlaceLocation("BAR CONDE"));
 
 
 //        Set<RankedPlaceLocation> ranking = PlaceSearchEngine.getSimilarity(locations, "MUSEO");
 //        ranking.forEach(System.out::println);
 //        System.out.println("--------------------");
-            List<PlaceLocation> ranking2 = PlaceSearchEngine.getSimilarity(locations, "BALORO");
-            ranking2.forEach(System.out::println);
-
+//            List<PlaceLocation> ranking2 = PlaceSearchEngine.getSimilarity(locations, "BALORO");
+//            ranking2.forEach(System.out::println);
+        List<PlaceLocation> ranking2 = PlaceSearchEngine.getSimilarity(locations, "BALORO");
+        ranking2.forEach(System.out::println);
 
     }
 }
