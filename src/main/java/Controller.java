@@ -1,6 +1,7 @@
 import model.BusInPath;
 import model.BusStop;
 import model.PlaceLocation;
+import pathfinder.Graph;
 import placefinder.PlaceSearchEngine;
 import reader.BusStopReader;
 import reader.PlacesReader;
@@ -16,6 +17,7 @@ public class Controller {
     public Controller() throws IOException {
         locations = new PlacesReader().getPlaces();
         busStops = new BusStopReader().getBusStops();
+        Graph graph = new Graph(busStops);
     }
 
     public List<BusInPath> findPath(double fromLat, double fromLng, double toLat, double toLng) {
