@@ -1,8 +1,10 @@
 import model.BusInPath;
+import model.BusRoute;
 import model.BusStop;
 import model.PlaceLocation;
 import pathfinder.Graph;
 import placefinder.PlaceSearchEngine;
+import reader.BusRouteReader;
 import reader.BusStopReader;
 import reader.PlacesReader;
 
@@ -13,11 +15,19 @@ public class Controller {
 
     private final Set<PlaceLocation> locations;
     private final List<BusStop> busStops;
+    private final List<BusRoute> busRoutes;
 
     public Controller() throws IOException {
         locations = new PlacesReader().getPlaces();
         busStops = new BusStopReader().getBusStops();
-        Graph graph = new Graph(busStops);
+        busRoutes = new BusRouteReader().getBusRoutes();
+        Graph graph = new Graph(busStops, busRoutes);
+        System.out.println("Tamaño values: " + graph.nodes.values().size());
+        int amount = 0;
+        for (Graph.Node value : graph.nodes.values()) {
+            amount+= value.edges.size();
+        }
+        System.out.println(amount);
     }
 
     public List<BusInPath> findPath(double fromLat, double fromLng, double toLat, double toLng) {

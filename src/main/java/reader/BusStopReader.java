@@ -20,6 +20,7 @@ public class BusStopReader {
 
     public List<BusStop> getBusStops() {
         busStopData.forEach(b -> busStops.add(new BusStop(Double.parseDouble(b[4]), Double.parseDouble(b[3]), Integer.parseInt(b[5]), b[8])));
+        System.out.println("Tamaño busStops: " + busStops.size());
         return busStops;
     }
 }
