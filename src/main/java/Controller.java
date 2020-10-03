@@ -1,5 +1,6 @@
 import model.*;
 import pathfinder.Graph;
+import pathfinder.PathFinder;
 import placefinder.PlaceSearchEngine;
 import reader.BusRouteReader;
 import reader.BusStopReader;
@@ -13,21 +14,23 @@ public class Controller {
     private final Set<PlaceLocation> locations;
     private final List<BusStop> busStops;
     private final List<BusRoute> busRoutes;
+    private final PathFinder pathFinder;
 
     public Controller() throws IOException {
         locations = new PlacesReader().getPlaces();
         busStops = new BusStopReader().getBusStops();
         busRoutes = new BusRouteReader().getBusRoutes();
         Graph graph = new Graph(busStops, busRoutes);
-        System.out.println("Tamaño values: " + graph.nodes.values().size());
+        pathFinder = new PathFinder(graph);
+        System.out.println("Tamaño values: " + graph.getNodes().values().size());
         List<BusStop> veintidosA = new ArrayList<>();
-        int edges[] = {0};
-        graph.nodes.values().forEach(val -> edges[0] += val.edges.size());
+        int[] edges = {0};
+        graph.getNodes().values().forEach(val -> edges[0] += val.getEdges().size());
         System.out.println("Aristas totales: " + edges[0]);
         final int[] i = {0};
-        graph.nodes.values().forEach(val -> {
+        graph.getNodes().values().forEach(val -> {
             if(val.getBusStop().getBusName().equals("371E") && val.getBusStop().getDirectionId() == 0) {
-                i[0] += val.edges.size();
+                i[0] += val.getEdges().size();
                 veintidosA.add(val.getBusStop());
 
             }
@@ -37,7 +40,7 @@ public class Controller {
     }
 
     public List<BusInPath> findPath(double fromLat, double fromLng, double toLat, double toLng) {
-        return Collections.singletonList(new BusInPath("No implementado", 0, 0, 0, 0));
+        return pathFinder.findPath(new Coord(fromLat,fromLng),new Coord(toLat,toLng));
     }
 
     public List<PlaceLocation> findPlaces(String searchTerm){

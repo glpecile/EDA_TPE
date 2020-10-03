@@ -8,7 +8,7 @@ import java.util.*;
 
 public class Graph {
     //CAMBIAR TODO
-    public final Map<BusStop, Node> nodes;
+    private final Map<BusStop, Node> nodes;
 
     public Graph(List<BusStop> busStops, List<BusRoute> busRoutes) {
         nodes = new HashMap<>();
@@ -48,5 +48,9 @@ public class Graph {
                 }
             }
         }
+    }
+
+    public Map<BusStop, Node> getNodes() {
+        return nodes;
     }
 }
