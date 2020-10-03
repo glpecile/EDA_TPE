@@ -25,22 +25,17 @@ public class Graph {
 
     private void generateEdges(List<BusRoute> busRoutes) {
         for(BusRoute busRoute : busRoutes) {
-            //System.out.println("ENTRE");
             int i = 0;
             BusStop head = null;
             while(i < busRoute.getRoute().size()) {
                 BusStop aux = new BusStop(busRoute.getRoute().get(i).getLng(),
-                        busRoute.getRoute().get(i).getLat(),
-                        busRoute.getId_line(), busRoute.getLine());
+                busRoute.getRoute().get(i).getLat(),
+                busRoute.getId_line(), busRoute.getLine());
                 if(nodes.containsKey(aux)) {
-                    //System.out.println("ENtre x2");
-                    //System.out.println(head);
-                    //System.out.println(aux);
                     if(head != null) {
                         nodes.get(head).addEdge(nodes.get(aux), head.getCoord().distanceTo(aux.getCoord()));
-                        //System.out.println(head + " - " + aux);
                     }
-                    head = aux;
+                head = aux;
                 }
                 i++;
             }

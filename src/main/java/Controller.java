@@ -23,11 +23,20 @@ public class Controller {
         busRoutes = new BusRouteReader().getBusRoutes();
         Graph graph = new Graph(busStops, busRoutes);
         System.out.println("Tamaño values: " + graph.nodes.values().size());
-        int amount = 0;
-        for (Graph.Node value : graph.nodes.values()) {
-            amount+= value.edges.size();
-        }
-        System.out.println(amount);
+        List<BusStop> veintidosA = new ArrayList<>();
+        int edges[] = {0};
+        graph.nodes.values().forEach(val -> edges[0] += val.edges.size());
+        System.out.println("Aristas totales: " + edges[0]);
+        final int[] i = {0};
+        graph.nodes.values().forEach(val -> {
+            if(val.getBusStop().getBusName().equals("371E") && val.getBusStop().getDirectionId() == 0) {
+                i[0] += val.edges.size();
+                veintidosA.add(val.getBusStop());
+
+            }
+        });
+        System.out.println("Nodos 276D-0: " + veintidosA.size());
+        System.out.println("Aristas 276D-0: " + i[0]);
     }
 
     public List<BusInPath> findPath(double fromLat, double fromLng, double toLat, double toLng) {

@@ -3,12 +3,13 @@ package model;
 import java.util.Objects;
 
 public class Coord {
+    private static final double ROUND = 1000000; //Tantos ceros como decimales
     private final double lat;
     private final double lng;
 
     public Coord(double lat, double lng) {
-        this.lat = lat;
-        this.lng = lng;
+        this.lat = Math.round(lat * ROUND) / ROUND;
+        this.lng = Math.round(lng * ROUND) / ROUND;
     }
 
     public double getLat() {
