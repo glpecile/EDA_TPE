@@ -7,7 +7,6 @@ import model.Coord;
 import java.util.*;
 
 public class Graph {
-
     //CAMBIAR TODO
     public final Map<BusStop, Node> nodes;
 
@@ -43,47 +42,11 @@ public class Graph {
 
         for(Node head : nodes.values()) {
             for(Node tail : nodes.values()) {
-                if(head.getBusStop().getCoord().isCloser(tail.busStop.getCoord())) {
+                if(head.getBusStop().getCoord().isCloser(tail.getBusStop().getCoord()) &&
+                        !head.getBusStop().getBusName().equals(tail.getBusStop().getBusName())) {
                     head.addEdge(tail, head.getBusStop().getCoord().distanceTo(tail.getBusStop().getCoord()));
                 }
             }
-        }
-    }
-
-    public static class Node {
-        //CAMBIAR
-        private final BusStop busStop;
-        public List<Edge> edges;
-
-        public Node(BusStop busStop) {
-            this.busStop = busStop;
-            edges = new ArrayList<>();
-        }
-
-        public void addEdge(Node tail, double weight) {
-            edges.add(new Edge(tail, weight));
-        }
-
-        public BusStop getBusStop() {
-            return busStop;
-        }
-    }
-
-    public static class Edge {
-        private final Node tail;
-        private final double weight;
-
-        public Edge(Node tail, double weight) {
-            this.tail = tail;
-            this.weight = weight;
-        }
-
-        public Node getTail() {
-            return tail;
-        }
-
-        public double getWeight() {
-            return weight;
         }
     }
 }
