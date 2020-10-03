@@ -40,6 +40,14 @@ public class Graph {
                 i++;
             }
         }
+
+        for(Node head : nodes.values()) {
+            for(Node tail : nodes.values()) {
+                if(head.getBusStop().getCoord().isCloser(tail.busStop.getCoord())) {
+                    head.addEdge(tail, head.getBusStop().getCoord().distanceTo(tail.getBusStop().getCoord()));
+                }
+            }
+        }
     }
 
     public static class Node {

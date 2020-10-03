@@ -38,6 +38,10 @@ public class Coord {
     TODO
      */
     public double distanceTo(Coord other) {
-        return 0;
+        return Math.sqrt(Math.pow((this.lat-other.lat),2)+Math.pow((this.lng-other.lng),2));
+    }
+
+    public boolean isCloser(Coord other) {
+        return (this.distanceTo(other) < 0.01 );
     }
 }

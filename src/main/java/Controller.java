@@ -1,7 +1,4 @@
-import model.BusInPath;
-import model.BusRoute;
-import model.BusStop;
-import model.PlaceLocation;
+import model.*;
 import pathfinder.Graph;
 import placefinder.PlaceSearchEngine;
 import reader.BusRouteReader;
