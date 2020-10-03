@@ -4,6 +4,7 @@ import model.BusInPath;
 import model.Coord;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class PathFinder {
     private final Graph graph;
@@ -17,7 +18,7 @@ public class PathFinder {
     }
 
     public List<BusInPath> findPath(Coord from, Coord to) {
-        Set<BusInPath> buses = new TreeSet<>(Comparator.comparing(BusInPath::getCost).thenComparing(BusInPath::getName));
+        Map<String,BusInPath> buses = new HashMap<>();
         List<Node> closestStartStops = new ArrayList<>();
         List<Node> closestEndStops = new ArrayList<>();
         graph.getNodes().forEach( (stop,node) -> {
@@ -28,8 +29,17 @@ public class PathFinder {
                 closestEndStops.add(node);
             }
         });
-        closestStartStops.forEach(stop -> buses.add(Dijkstra(stop,closestEndStops)));
-        return new ArrayList<>(buses);
+        System.out.println(closestStartStops);
+        System.out.println(closestEndStops);
+        closestStartStops.forEach(start -> {
+            BusInPath bus = Dijkstra(start,closestEndStops);
+            if(bus != null) {
+                BusInPath aux = buses.getOrDefault(bus.getName(), null);
+                if (aux == null || bus.getCost() < aux.getCost())
+                    buses.put(bus.getName(), bus);
+            }
+        });
+        return buses.values().stream().sorted(Comparator.comparing(BusInPath::getCost).thenComparing(BusInPath::getName)).collect(Collectors.toList());
     }
 
     // Complejidad: O((N+M)*log(N)).
@@ -48,21 +58,28 @@ public class PathFinder {
             if (estamos cerca del destino)
                 return camino de llegada;
              */
-            if (endStops.contains(pqNode.node))
+
+//            System.out.println(pqNode.node.getBusStop() + ": " + pqNode.cost);
+
+            for (Edge edge : pqNode.node.getEdges()) {
+                double targetNodeCost = pqNode.cost + edge.getWeight();
+                if(!pqNode.node.getBusStop().getBusName().equals(edge.getTail().getBusStop().getBusName())) {
+                    targetNodeCost *= 1000;
+                }
+                if (targetNodeCost < edge.getTail().getCost()) {
+                    edge.getTail().setCost(targetNodeCost);
+                    queue.add(new PqNode(edge.getTail(), targetNodeCost));
+                }
+
+            }
+            if (endStops.contains(pqNode.node)) {
+                System.out.println(pqNode.node.getBusStop());
                 return new BusInPath(pqNode.node.getBusStop().getBusName(),
                         startingBusStop.getBusStop().getCoord().getLat(),
                         startingBusStop.getBusStop().getCoord().getLng(),
                         pqNode.node.getBusStop().getCoord().getLat(),
                         pqNode.node.getBusStop().getCoord().getLng(),
                         pqNode.cost);
-//            System.out.println(pqNode.node.getBusStop() + ": " + pqNode.cost);
-
-            for (Edge edge : pqNode.node.getEdges()) {
-                double targetNodeCost = pqNode.cost + edge.getWeight();
-                if (targetNodeCost < edge.getTail().getCost()) {
-                    edge.getTail().setCost(targetNodeCost);
-                    queue.add(new PqNode(edge.getTail(), targetNodeCost));
-                }
             }
         }
         return null;

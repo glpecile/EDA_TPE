@@ -48,4 +48,11 @@ public class Node {
     public List<Edge> getEdges() {
         return edges;
     }
+
+    @Override
+    public String toString() {
+        return "Node{" +
+                "busStop=" + busStop +
+                '}';
+    }
 }

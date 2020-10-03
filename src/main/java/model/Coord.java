@@ -42,6 +42,6 @@ public class Coord {
     }
 
     public boolean isCloser(Coord other) {
-        return (this.distanceTo(other) < 0.01 );
+        return (this.distanceTo(other) < 0.0045 );
     }
 }

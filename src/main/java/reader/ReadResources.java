@@ -11,6 +11,7 @@ import java.util.List;
 
 public class ReadResources {
     private final String filePath;
+
     public ReadResources(String filePath) {
         this.filePath = filePath;
 
