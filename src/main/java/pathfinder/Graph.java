@@ -42,8 +42,8 @@ public class Graph {
 
         for(Node head : nodes.values()) {
             for(Node tail : nodes.values()) {
-                if(head.getBusStop().getCoord().isCloser(tail.getBusStop().getCoord()) &&
-                        !head.getBusStop().getBusName().equals(tail.getBusStop().getBusName())) {
+                if(head.getBusStop().getCoord().isCloser(tail.getBusStop().getCoord()) /*&&
+                        !head.getBusStop().getBusName().equals(tail.getBusStop().getBusName())*/) {
                     head.addEdge(tail, head.getBusStop().getCoord().distanceTo(tail.getBusStop().getCoord()));
                 }
             }
