@@ -17,6 +17,9 @@ public class PathFinder {
     }
 
     public List<BusInPath> findPath(Coord from, Coord to) {
+        if (from.isCloser(to)) {
+            return Collections.singletonList(new BusInPath("Camine.",from,to,0));
+        }
         TreeMap<Double,List<BusInPath>> buses = new TreeMap<>();
         List<Node> closestStartStops = new ArrayList<>();
         graph.getNodes().forEach( (stop,node) -> {
@@ -51,9 +54,8 @@ public class PathFinder {
             /*
             if (estamos cerca del destino)
                 return camino de llegada;
+            <=> System.out.println(pqNode.node.getBusStop() + ": " + pqNode.cost);
              */
-
-//            System.out.println(pqNode.node.getBusStop() + ": " + pqNode.cost);
             if(pqNode.node.getBusStop().getCoord().isCloser(to)){
                 return pqNode.getBusesInPath();
             }
@@ -65,7 +67,7 @@ public class PathFinder {
                     if(!pqNode.node.getBusStop().getBusName().equals(edge.getTail().getBusStop().getBusName())) {
                         targetNodeCost += 1;
                         Node edgeNode = edge.getTail();
-//                        aux.get(aux.size()-1).setTo(edgeNode.getBusStop().getCoord());
+//                      aux.get(aux.size()-1).setTo(edgeNode.getBusStop().getCoord());
                         BusInPath toAdd = new BusInPath(edgeNode.getBusStop().getBusName(),edgeNode.getBusStop().getCoord(),to, targetNodeCost);
                         aux.add(toAdd);
                     }
