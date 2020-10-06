@@ -7,7 +7,6 @@ import java.util.*;
 
 public class PathFinder {
     private final Graph graph;
-    private static final double WALKING_PENALTY = 0.01;
     private static final double TRANSFER_PENALTY = 1;
 
     public PathFinder(Graph graph) {
@@ -31,10 +30,10 @@ public class PathFinder {
             }
         });
         closestStartStops.forEach(start -> {
-            List<BusInPath> bus = Dijkstra(start,from, to, walkingPenalty(from.distanceTo(start.getBusStop().getCoord())));
+            List<BusInPath> bus = Dijkstra(start,from, to);
             BusInPath busCost;
             busCost = bus.get(bus.size() - 1);
-            buses.putIfAbsent(busCost.getCost(),bus);
+            buses.putIfAbsent(busCost.getCost(),bus); //Si el start esta donde no hay paradas cercanas da nullPointerException
         });
         System.out.println(buses.values().size());
         Collection<List<BusInPath>> path = buses.values();
@@ -47,11 +46,14 @@ public class PathFinder {
     }
 
     // Complejidad: O((N+M)*log(N)).
-    private List<BusInPath> Dijkstra(Node startingBusStop,Coord from, Coord to, double initialCost) {
+    private List<BusInPath> Dijkstra(Node startingBusStop,Coord from, Coord to) {
+        long i = 0;
+        long j = 0;
         unmarkAllNodes();
         graph.getNodes().values().forEach(node -> node.setCost(Double.MAX_VALUE));
 
         PriorityQueue<PqNode> queue = new PriorityQueue<>();
+        double initialCost = walkingPenalty(from.distanceTo(startingBusStop.getBusStop().getCoord()));
         BusInPath startBusPath = new BusInPath(startingBusStop.getBusStop().getBusName(),from,to, initialCost);
         List<BusInPath> initialList = new ArrayList<>();
         initialList.add(startBusPath);
@@ -83,6 +85,7 @@ public class PathFinder {
 //                last.addCost(walkingPenalty(to.distanceTo(pqNode.node.getBusStop().getCoord())));
                 last.addCost(walkingPenalty(pqNode.node.getBusStop().getCoord().distanceTo(to)));
 //                System.out.println("DESPUES: " + last.getCost());
+                //System.out.println("Iteraciones: " + i + " | Internas: " + j);
                 return auxList;
             }
 
@@ -90,13 +93,19 @@ public class PathFinder {
 
             for (Edge edge : pqNode.node.getEdges()) {
                 double targetNodeCost = pqNode.cost + edge.getWeight();
+                boolean transfer = !pqNode.node.getBusStop().getBusName().equals(edge.getTail().getBusStop().getBusName());
+                if(transfer) {
+                    targetNodeCost += TRANSFER_PENALTY;
+                    targetNodeCost += walkingPenalty(pqNode.node.getBusStop().distanceTo(edge.getTail().getBusStop()));
+                }
+                i++;
                 if (targetNodeCost < edge.getTail().getCost()) {
-                    edge.getTail().setCost(targetNodeCost);
+                    //edge.getTail().setCost(targetNodeCost);
                     List<BusInPath> aux = new ArrayList<>(pqNode.getBusesInPath());
-
-                    if(!pqNode.node.getBusStop().getBusName().equals(edge.getTail().getBusStop().getBusName())) {
-                        targetNodeCost += TRANSFER_PENALTY;
-                        targetNodeCost += walkingPenalty(pqNode.node.getBusStop().getCoord().distanceTo(edge.getTail().getBusStop().getCoord()));
+                    j++;
+                    if(transfer) {
+                        //targetNodeCost += TRANSFER_PENALTY;
+                        //targetNodeCost += walkingPenalty(pqNode.node.getBusStop().getCoord().distanceTo(edge.getTail().getBusStop().getCoord()));
                         Node edgeNode = edge.getTail();
                         //aux.get(aux.size() - 1).setCost(pqNode.cost);
                         //aux.get(aux.size() - 1).setTo(pqNode.node.getBusStop().getCoord());
@@ -108,11 +117,7 @@ public class PathFinder {
                     //aux.get(aux.size() - 1).setCost(pqNode.cost);
                     //aux.get(aux.size()-1).setTo(pqNode.node.getBusStop().getCoord());
                     //aux.get(aux.size()-1).setTo(edge.getTail().getBusStop().getCoord()); no hace falta esta actu.
-                    /*
-                    Si no cambia de bondi, el to es siempre el mismo, si cambia se actualiza cuando cambio usando el pqNode
-                    No afecta el walkingPenalty porque se calcula entre el to, y el ultimo Pqnode.
-                     */
-                    //edge.getTail().setCost(targetNodeCost);
+                    edge.getTail().setCost(targetNodeCost); //ACA FUNCIONA MUCHO MAS LENTO idk
                     queue.add(new PqNode(edge.getTail(), aux, targetNodeCost));
 
                 }

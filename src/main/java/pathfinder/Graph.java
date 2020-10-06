@@ -32,7 +32,7 @@ public class Graph {
                 busRoute.getId_line(), busRoute.getLine());
                 if(nodes.containsKey(aux)) {
                     if(head != null) {
-                        nodes.get(head).addEdge(nodes.get(aux), head.getCoord().distanceTo(aux.getCoord()));
+                        nodes.get(head).addEdge(nodes.get(aux), head.distanceTo(aux));
                     }
                 head = aux;
                 }
@@ -42,9 +42,9 @@ public class Graph {
 
         for(Node head : nodes.values()) {
             for(Node tail : nodes.values()) {
-                if(head.getBusStop().getCoord().isCloser(tail.getBusStop().getCoord()) /*&&
+                if(head.getBusStop().isCloser(tail.getBusStop()) /*&&
                         !head.getBusStop().getBusName().equals(tail.getBusStop().getBusName())*/) {
-                    head.addEdge(tail, head.getBusStop().getCoord().distanceTo(tail.getBusStop().getCoord()));
+                    head.addEdge(tail, head.getBusStop().distanceTo(tail.getBusStop()));
                 }
             }
         }
