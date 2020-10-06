@@ -8,7 +8,7 @@ public class BusStop {
     private final String busName;
 
     public BusStop(Double lng, Double lat, Integer directionId, String busName) {
-        coord = new Coord(lat, lng);
+        coord = new Coord(lng, lat);
         this.directionId = directionId;
         this.busName = busName;
     }
@@ -25,9 +25,22 @@ public class BusStop {
         return busName;
     }
 
+    /*
+    SE AÑADEN NUEVOS METODOS PARA NO ACCEDER A LA COORDENADA Y ACORTAR CODIGO
+     */
+    public double distanceTo(BusStop other) {
+        return this.coord.distanceTo(other.getCoord());
+    }
+
+    public boolean isCloser(BusStop other) {
+        return this.coord.isCloser(other.getCoord());
+    }
+
+
+
     @Override
     public String toString() {
-        return busName;
+        return busName + "||" + coord.toString();
     }
 
     @Override

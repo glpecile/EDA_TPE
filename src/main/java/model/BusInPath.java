@@ -25,18 +25,6 @@ public class BusInPath {
         this.cost = cost;
     }
 
-    public void setToLat(double toLat) {
-        this.toLat = toLat;
-    }
-
-    public void setToLng(double toLng) {
-        this.toLng = toLng;
-    }
-    public void setTo(Coord newTo){
-        setToLat(newTo.getLat());
-        setToLng(newTo.getLng());
-    }
-
     public String getName() {
         return name;
     }
@@ -61,12 +49,29 @@ public class BusInPath {
         return cost;
     }
 
-    public void addCost(double extra) {
-        this.cost += extra;
+    public Coord getToCoord() {
+        return new Coord(toLng, toLat);
     }
 
-    public Coord getToCoord() {
-        return new Coord(toLat, toLng);
+    public void setToLat(double toLat) {
+        this.toLat = toLat;
+    }
+
+    public void setToLng(double toLng) {
+        this.toLng = toLng;
+    }
+
+    public void setTo(Coord newTo){
+        setToLng(newTo.getLng());
+        setToLat(newTo.getLat());
+    }
+
+    public void setCost(double cost) {
+        this.cost = cost;
+    }
+
+    public void addCost(double extra) {
+        this.cost += extra;
     }
 
     public String toString() {

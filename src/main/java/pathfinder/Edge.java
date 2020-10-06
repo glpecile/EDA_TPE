@@ -16,4 +16,9 @@ public class Edge {
     public double getWeight() {
         return weight;
     }
+
+    @Override
+    public String toString() {
+        return tail.getBusStop().getCoord().toString() + "||" + weight;
+    }
 }

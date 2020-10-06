@@ -9,7 +9,7 @@ public class Node {
     //CAMBIAR
     private final BusStop busStop;
     private List<Edge> edges;
-    private boolean marked;
+    private boolean marked = false;
     private double cost=0;
 
     public Node(BusStop busStop) {

@@ -31,7 +31,7 @@ public class BusRouteReader {
         LinkedList<Coord> coordList = new LinkedList<>();
         for(String number : numbers) {
             String[] coord = number.split(" ");
-            coordList.add(new Coord(Double.parseDouble(coord[1]), Double.parseDouble(coord[0])));
+            coordList.add(new Coord(Double.parseDouble(coord[0]), Double.parseDouble(coord[1])));
         }
         return coordList;
     }
