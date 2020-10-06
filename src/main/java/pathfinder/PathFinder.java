@@ -52,7 +52,7 @@ public class PathFinder {
         graph.getNodes().values().forEach(node -> node.setCost(Double.MAX_VALUE));
 
         PriorityQueue<PqNode> queue = new PriorityQueue<>();
-        BusInPath startBusPath = new BusInPath(startingBusStop.getBusStop().getBusName(),startingBusStop.getBusStop().getCoord(),to, initialCost);
+        BusInPath startBusPath = new BusInPath(startingBusStop.getBusStop().getBusName(),from,to, initialCost);
         List<BusInPath> initialList = new ArrayList<>();
         initialList.add(startBusPath);
         queue.add(new PqNode(startingBusStop, initialList,initialCost));
@@ -90,9 +90,8 @@ public class PathFinder {
 
             for (Edge edge : pqNode.node.getEdges()) {
                 double targetNodeCost = pqNode.cost + edge.getWeight();
-                //double edgeCost = edge.getTail().getCost();
                 if (targetNodeCost < edge.getTail().getCost()) {
-                    //edge.getTail().setCost(targetNodeCost);
+                    edge.getTail().setCost(targetNodeCost);
                     List<BusInPath> aux = new ArrayList<>(pqNode.getBusesInPath());
 
                     if(!pqNode.node.getBusStop().getBusName().equals(edge.getTail().getBusStop().getBusName())) {
@@ -113,7 +112,7 @@ public class PathFinder {
                     Si no cambia de bondi, el to es siempre el mismo, si cambia se actualiza cuando cambio usando el pqNode
                     No afecta el walkingPenalty porque se calcula entre el to, y el ultimo Pqnode.
                      */
-                    edge.getTail().setCost(targetNodeCost);
+                    //edge.getTail().setCost(targetNodeCost);
                     queue.add(new PqNode(edge.getTail(), aux, targetNodeCost));
 
                 }
