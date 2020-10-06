@@ -67,6 +67,9 @@ public class PathFinder {
             <=> System.out.println(pqNode.node.getBusStop() + ": " + pqNode.cost);
              */
 
+//            pqNode.busesInPath.get(pqNode.busesInPath.size() - 1).setCost(pqNode.cost);
+//            pqNode.busesInPath.get(pqNode.busesInPath.size() - 1).setTo(pqNode.node.getBusStop().getCoord());
+
 
             if(pqNode.node.getBusStop().getCoord().isCloser(to)){
                 List<BusInPath> auxList = pqNode.getBusesInPath();
@@ -98,7 +101,7 @@ public class PathFinder {
                         Node edgeNode = edge.getTail();
                         //aux.get(aux.size() - 1).setCost(pqNode.cost);
                         //aux.get(aux.size() - 1).setTo(pqNode.node.getBusStop().getCoord());
-                        BusInPath toAdd = new BusInPath(edgeNode.getBusStop().getBusName(),edgeNode.getBusStop().getCoord(),to, targetNodeCost);
+                        BusInPath toAdd = new BusInPath(edgeNode.getBusStop().getBusName(), edgeNode.getBusStop().getCoord(), to, targetNodeCost);
                         aux.add(toAdd);
                     }
 

@@ -28,10 +28,10 @@ public class TestGraphFactory {
 
         System.out.println("------------------------");
         PathFinder pathFinder = getPathFinder(graph);
-        pathFinder.findPath(new Coord(0.000000,0.000000), new Coord(0.011000,-0.011000)); //Negro 0.019 aprox
-        System.out.println("------------------------");
-//        pathFinder.findPath(new Coord(0.000000,0.000000), new Coord(0.02,0.0)); //Negro => Verde (CON EL GRAFO PEQUEÑO) 1.02402 creo
+//        pathFinder.findPath(new Coord(0.000000,0.000000), new Coord(0.011000,-0.011000)); //Negro 0.019 aprox
 //        System.out.println("------------------------");
+        pathFinder.findPath(new Coord(0.000000,0.000000), new Coord(0.02,0.0)); //Negro => Verde (CON EL GRAFO PEQUEÑO) 1.02402 creo
+        System.out.println("------------------------");
         //INVERTIR COORD
 //        pathFinder.findPath(new Coord(-0.002000,0.010000), new Coord(-0.014000,0.014000)); //Rojo
 //        System.out.println("------------------------");
@@ -57,59 +57,59 @@ public class TestGraphFactory {
 
     private static void generateBusStops(List<BusStop> busStops) {
         //Linea "Negro" - 8 paradas
-        busStops.add(new BusStop(0.000000,0.0000000,0, "Negro"));
-        busStops.add(new BusStop(0.000000,-0.003000,0, "Negro"));
-        busStops.add(new BusStop(0.000000,-0.006000,0, "Negro"));
-        busStops.add(new BusStop(0.001000,-0.008000,0, "Negro"));
-        busStops.add(new BusStop(0.003000,-0.01000,0, "Negro"));
-        busStops.add(new BusStop(0.005000,-0.011000,0, "Negro"));
-        busStops.add(new BusStop(0.008000,-0.011000,0, "Negro"));
-        busStops.add(new BusStop(0.011000,-0.011000,0, "Negro"));
-
-        //Linea "Azul" - 11 paradas
-        double lng = -0.007;
-        double lat = -0.014;
-        for(int i = 0; i < 6; i++) {
-            busStops.add(new BusStop(lng, lat, 0, "Azul"));
-            lng += 0.001000;
-            lat += 0.002000;
-        }
-
-        lng = -0.001000;
-        lat = -0.002000;
-        for(int i = 0; i < 5; i++) {
-            busStops.add(new BusStop(lng, lat, 0, "Azul"));
-            lng += 0.003000;
-        }
-
-        //Linea "Verde" - 14 paradas
-        lng = -0.001000;
-        lat = 0.000000;
-        for(int i = 0; i < 6; i++) {
-            busStops.add(new BusStop(lng, lat, 0, "Verde"));
-            busStops.add(new BusStop(lng - 0.006000, lat, 0, "Verde"));
-            lat -= 0.003000;
-        }
-        busStops.add(new BusStop(-0.004000,0.000000,0, "Verde"));
-        busStops.add(new BusStop(-0.004000,-0.015000,0, "Verde"));
-
-        //Linea "Rojo" - 6 paradas
-        lng = 0.012000;
-        lat = -0.002000;
-        for(int i = 0; i < 5; i++) {
-            busStops.add(new BusStop(lng, lat, 0, "Rojo"));
-            lat -= 0.003000;
-        }
-        busStops.add(new BusStop(0.015000,-0.015000,0, "Rojo"));
+//        busStops.add(new BusStop(0.000000,0.0000000,0, "Negro"));
+//        busStops.add(new BusStop(0.000000,-0.003000,0, "Negro"));
+//        busStops.add(new BusStop(0.000000,-0.006000,0, "Negro"));
+//        busStops.add(new BusStop(0.001000,-0.008000,0, "Negro"));
+//        busStops.add(new BusStop(0.003000,-0.01000,0, "Negro"));
+//        busStops.add(new BusStop(0.005000,-0.011000,0, "Negro"));
+//        busStops.add(new BusStop(0.008000,-0.011000,0, "Negro"));
+//        busStops.add(new BusStop(0.011000,-0.011000,0, "Negro"));
+//
+//        //Linea "Azul" - 11 paradas
+//        double lng = -0.007;
+//        double lat = -0.014;
+//        for(int i = 0; i < 6; i++) {
+//            busStops.add(new BusStop(lng, lat, 0, "Azul"));
+//            lng += 0.001000;
+//            lat += 0.002000;
+//        }
+//
+//        lng = -0.001000;
+//        lat = -0.002000;
+//        for(int i = 0; i < 5; i++) {
+//            busStops.add(new BusStop(lng, lat, 0, "Azul"));
+//            lng += 0.003000;
+//        }
+//
+//        //Linea "Verde" - 14 paradas
+//        lng = -0.001000;
+//        lat = 0.000000;
+//        for(int i = 0; i < 6; i++) {
+//            busStops.add(new BusStop(lng, lat, 0, "Verde"));
+//            busStops.add(new BusStop(lng - 0.006000, lat, 0, "Verde"));
+//            lat -= 0.003000;
+//        }
+//        busStops.add(new BusStop(-0.004000,0.000000,0, "Verde"));
+//        busStops.add(new BusStop(-0.004000,-0.015000,0, "Verde"));
+//
+//        //Linea "Rojo" - 6 paradas
+//        lng = 0.012000;
+//        lat = -0.002000;
+//        for(int i = 0; i < 5; i++) {
+//            busStops.add(new BusStop(lng, lat, 0, "Rojo"));
+//            lat -= 0.003000;
+//        }
+//        busStops.add(new BusStop(0.015000,-0.015000,0, "Rojo"));
 
         //MINI GRAFO
-//        busStops.add(new BusStop(0.000000,0.0000000,0, "Negro"));
-//        busStops.add(new BusStop(0.004000,0.0000,0, "Negro"));
-//        busStops.add(new BusStop(0.008000,0.00000,0, "Negro"));
-//
-//        busStops.add(new BusStop(0.012000,0.000000,0, "Verde"));
-//        busStops.add(new BusStop(0.016000,0.000,0, "Verde"));
-//        busStops.add(new BusStop(0.020000,0.000,0, "Verde"));
+        busStops.add(new BusStop(0.000000,0.0000000,0, "Negro"));
+        busStops.add(new BusStop(0.004000,0.0000,0, "Negro"));
+        busStops.add(new BusStop(0.008000,0.00000,0, "Negro"));
+
+        busStops.add(new BusStop(0.012000,0.000000,0, "Verde"));
+        busStops.add(new BusStop(0.016000,0.000,0, "Verde"));
+        busStops.add(new BusStop(0.020000,0.000,0, "Verde"));
 
     }
 
