@@ -4,7 +4,7 @@ import java.util.Objects;
 
 
 public class Coord {
-    private static final double IS_CLOSER = 0.005;
+    public static final double IS_CLOSER = 0.005;
     private static final double ROUND = 1000000; //Tantos ceros como decimales
     private final double lng;
     private final double lat;
