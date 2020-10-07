@@ -19,14 +19,15 @@ public class Graph {
 
     public Graph(List<BusStop> busStops, List<BusRoute> busRoutes, Coord topRight, Coord bottomLeft) {
         nodes = new HashMap<>();
-        generateNodes(busStops);
-        generateEdges(busRoutes);
         TOP_RIGHT = topRight;
         BOTTOM_LEFT = bottomLeft;
         MAX_ROW = (int) (((TOP_RIGHT.getLat() - BOTTOM_LEFT.getLat()) / WALKING_DISTANCE) );
         MAX_COL = (int) (((TOP_RIGHT.getLng() - BOTTOM_LEFT.getLng()) / WALKING_DISTANCE ) );
         IS_IN_TOWN = (TOP_RIGHT.getLat() - BOTTOM_LEFT.getLat()) / MAX_ROW;
         matrix = new Sector[MAX_ROW][MAX_COL];
+        generateNodes(busStops);
+        generateEdges(busRoutes);
+
     }
 
     private void generateNodes(List<BusStop> busStops) {
@@ -134,8 +135,8 @@ public class Graph {
     }
 
     public boolean isInTown(Coord position){
-        return position.getLng() < TOP_RIGHT.getLng() && position.getLng() > BOTTOM_LEFT.getLng() &&
-                position.getLat() < TOP_RIGHT.getLat() && position.getLat() > BOTTOM_LEFT.getLat();
+        return position.getLng() <= TOP_RIGHT.getLng() && position.getLng() >= BOTTOM_LEFT.getLng() &&
+                position.getLat() <= TOP_RIGHT.getLat() && position.getLat() >= BOTTOM_LEFT.getLat(); // Lo cambiamos a menor y mayor igual porque no tomaba los casos limites
     }
 
     private static class Sector {
