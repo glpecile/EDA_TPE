@@ -29,38 +29,41 @@ public class PathFinder {
             if (stop.getCoord().isCloser(from)) {
                 closestStartStops.add(node);
             }
-        });
+        });// aca podriamos hacer lo de busqueda por los sectores para hacerlo mas eficiente
         if (closestStartStops.isEmpty()) {
             return Collections.singletonList(new BusInPath("No hay paradas cercanas.",from,to,10));
         }
-        closestStartStops.forEach(start -> {
-            List<BusInPath> bus = Dijkstra(start,from, to);
-            BusInPath busCost;
-            busCost = bus.get(bus.size() - 1);
-            buses.putIfAbsent(busCost.getCost(),bus); //Si el start esta donde no hay paradas cercanas da nullPointerException
-        });
-
-        System.out.println(buses.values().size());
-        Collection<List<BusInPath>> path = buses.values();
-        for(List<BusInPath> list : path) {
-            System.out.println(list);
-        }
+//        closestStartStops.forEach(start -> {
+//            List<BusInPath> bus = Dijkstra(start,from, to);
+//            BusInPath busCost;
+//            busCost = bus.get(bus.size() - 1);
+//            buses.putIfAbsent(busCost.getCost(),bus); //Si el start esta donde no hay paradas cercanas da nullPointerException
+//        });
+        List<BusInPath> bus = Dijkstra(closestStartStops,from,to);
+//        System.out.println(buses.values().size());
+//        Collection<List<BusInPath>> path = buses.values();
+//        for(List<BusInPath> list : path) {
+//            System.out.println(list);
+//        }
 
         long tFinal = System.currentTimeMillis();
         System.out.println("Tiempo de Busqueda: " + (((double)(tFinal - tInicial))/1000.0));
-        return buses.firstEntry().getValue();
+//        return buses.firstEntry().getValue();
+        return bus;
     }
 
     // Complejidad: O((N+M)*log(N)).
-    private List<BusInPath> Dijkstra(Node startingBusStop,Coord from, Coord to) {
+    private List<BusInPath> Dijkstra(List<Node> startingBusStops,Coord from, Coord to) {
         unmarkAllNodes();
         graph.getNodes().values().forEach(node -> node.setCost(Double.MAX_VALUE));
 
         PriorityQueue<PqNode> queue = new PriorityQueue<>();
-        double initialCost = walkingPenalty(from.distanceTo(startingBusStop.getBusStop().getCoord()));
-        List<BusInPath> initialList = new ArrayList<>();
-        initialList.add(new BusInPath(startingBusStop.getBusStop().getBusName(),from,to, initialCost));
-        queue.add(new PqNode(startingBusStop, initialList,initialCost));
+        startingBusStops.forEach((startingBusStop) -> {
+            double initialCost = walkingPenalty(from.distanceTo(startingBusStop.getBusStop().getCoord()));
+            List<BusInPath> initialList = new ArrayList<>();
+            initialList.add(new BusInPath(startingBusStop.getBusStop().getBusName(),from,to, initialCost));
+            queue.add(new PqNode(startingBusStop, initialList,initialCost));
+        });
 
         while (!queue.isEmpty()) {
             PqNode pqNode = queue.remove();
