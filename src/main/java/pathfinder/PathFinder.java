@@ -29,6 +29,9 @@ public class PathFinder {
                 closestStartStops.add(node);
             }
         });
+        if (closestStartStops.isEmpty()) {
+            return Collections.singletonList(new BusInPath("No hay paradas cercanas.",from,to,10));
+        }
         closestStartStops.forEach(start -> {
             List<BusInPath> bus = Dijkstra(start,from, to);
             BusInPath busCost;
