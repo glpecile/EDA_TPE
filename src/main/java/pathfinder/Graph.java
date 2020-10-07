@@ -12,7 +12,7 @@ public class Graph {
     public static final double WALKING_DISTANCE = Coord.IS_CLOSER;
     public static final int MAX_ROW = (int) (((TOP_RIGHT.getLat() - BOTTOM_LEFT.getLat()) / WALKING_DISTANCE) );
     public static final int MAX_COL = (int) (((TOP_RIGHT.getLng() - BOTTOM_LEFT.getLng()) / WALKING_DISTANCE ) );
-
+    public static final double IS_IN_TOWN = (TOP_RIGHT.getLat() - BOTTOM_LEFT.getLat()) / MAX_ROW;
 
     private final Map<BusStop, Node> nodes;
     private final Sector[][] matrix = new Sector[MAX_ROW][MAX_COL];
@@ -25,8 +25,24 @@ public class Graph {
 
     private void generateNodes(List<BusStop> busStops) {
         for (BusStop busStop : busStops) {
-            nodes.putIfAbsent(busStop, new Node(busStop));
+            if(isInTown(busStop.getCoord())){
+                Node toAdd = new Node(busStop);
+                nodes.putIfAbsent(busStop, toAdd);
+
+                int row = rowIndex(busStop.getCoord().getLat());
+                int col = colIndex(busStop.getCoord().getLng());
+
+                System.out.println("Row:" + row);
+                System.out.println("Col:" + col);
+                if(matrix[row][col] == null)
+                    matrix[row][col] = new Sector();
+                matrix[row][col].addNode(toAdd);
+            }
+
+
+
         }
+
     }
 
     private void generateEdges(List<BusRoute> busRoutes) {
@@ -46,34 +62,80 @@ public class Graph {
                 i++;
             }
         }
+        for (int i = 0; i < MAX_ROW ; i++) {
+            for (int j = 0; j <MAX_COL ; j++) {
 
-        for (Node head : nodes.values()) {
-            for (Node tail : nodes.values()) {
-                if (head.getBusStop().isCloser(tail.getBusStop()) /*&&
-                        !head.getBusStop().getBusName().equals(tail.getBusStop().getBusName())*/) {
-                    head.addEdge(tail, head.getBusStop().distanceTo(tail.getBusStop()));
+                List<Node> thisSectorNodes = matrix[i][j].sectorNodes;
+                for (Node node :
+                        thisSectorNodes) {
+                    for (int k = i - 1; k <= i + 1; k++) {
+                        for (int l = j - 1; l <= j + 1; l++) {
+                            if(k>=0 && k < MAX_ROW && l >= 0 && l<MAX_COL){
+                                connectNodes(node, matrix[k][l].sectorNodes);
+                            }
+                        }
+                    }
                 }
             }
         }
+//        for (int i = 1; i < MAX_COL - 1; i++) {
+////            matrix[0][i] matrix[MAX_ROW - 1][i]
+//            for (Node sectorNode : matrix[0][i].sectorNodes) {
+//                for (int j = 0; j <= 1; j++) {
+//                    for (int k = i - 1; k <= i + 1; k++) {
+//                        connectNodes();
+//                    }
+//                }
+//            }
+//        }
+
+//        for (Node head : nodes.values()) {
+//            for (Node tail : nodes.values()) {
+//                if (head.getBusStop().isCloser(tail.getBusStop()) /*&&
+//                        !head.getBusStop().getBusName().equals(tail.getBusStop().getBusName())*/) {
+//                    head.addEdge(tail, head.getBusStop().distanceTo(tail.getBusStop()));
+//                }
+//            }
+//        }
     }
+
+    private void connectNodes(Node head, List<Node> sectorNodes) {
+        sectorNodes.forEach( (tail) -> {
+                    if(head.getBusStop().isCloser(tail.getBusStop())){
+                        head.addEdge(tail, head.getBusStop().distanceTo(tail.getBusStop()));
+                    }
+                }
+        );
+    }
+
     public static int rowIndex(double lat) {
-        return (int) ((TOP_RIGHT.getLat() - lat) / WALKING_DISTANCE);
+        return (int) ((TOP_RIGHT.getLat() - lat) / IS_IN_TOWN);
     }
 
     public static int colIndex(double lng) {
-        return (int) ((lng - BOTTOM_LEFT.getLng()) / WALKING_DISTANCE);
+        return (int) ((lng - BOTTOM_LEFT.getLng()) / IS_IN_TOWN);
     }
 
     public Map<BusStop, Node> getNodes() {
         return nodes;
     }
 
+    public boolean isInTown(Coord position){
+        return position.getLng() < TOP_RIGHT.getLng() && position.getLng() > BOTTOM_LEFT.getLng() &&
+                position.getLat() < TOP_RIGHT.getLat() && position.getLat() > BOTTOM_LEFT.getLat();
+    }
+
     private static class Sector {
-        private final List<Node> nodes;
+        private final List<Node> sectorNodes;
 
         public Sector() {
-            this.nodes = new ArrayList<>();
+            this.sectorNodes = new ArrayList<>();
         }
+
+        public void addNode(Node node){
+            sectorNodes.add(node);
+        }
+
     }
 
 }
