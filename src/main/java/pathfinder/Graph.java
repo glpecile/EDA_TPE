@@ -31,8 +31,8 @@ public class Graph {
     }
 
     private void generateNodes(List<BusStop> busStops) {
-        System.out.println("MAX_ROW" + MAX_ROW);
-        System.out.println("MAX_COL" + MAX_COL);
+        System.out.println("MAX_ROW: " + MAX_ROW);
+        System.out.println("MAX_COL: " + MAX_COL);
         System.out.println("---------------");
         for (BusStop busStop : busStops) {
             if(isInTown(busStop.getCoord())){
@@ -42,9 +42,9 @@ public class Graph {
                 int row = rowIndex(busStop.getCoord().getLat());
                 int col = colIndex(busStop.getCoord().getLng());
 
-                System.out.println("Row:" + row);
-                System.out.println("Col:" + col);
-                System.out.println("---------------");
+//                System.out.println("Row:" + row);
+//                System.out.println("Col:" + col);
+//                System.out.println("---------------");
                 if(matrix[row][col] == null)
                     matrix[row][col] = new Sector();
                 matrix[row][col].addNode(toAdd);
@@ -82,9 +82,8 @@ public class Graph {
                             thisSectorNodes) {
                         for (int k = i - 1; k <= i + 1; k++) {
                             for (int l = j - 1; l <= j + 1; l++) {
-                                if(k>=0 && k < MAX_ROW && l >= 0 && l<MAX_COL){
-                                    if(matrix[k][l] != null)
-                                        connectNodes(node, matrix[k][l].sectorNodes);
+                                if(k>=0 && k < MAX_ROW && l >= 0 && l<MAX_COL && matrix[k][l] != null){
+                                    connectNodes(node, matrix[k][l].sectorNodes);
                                 }
                             }
                         }
@@ -92,25 +91,6 @@ public class Graph {
                 }
             }
         }
-//        for (int i = 1; i < MAX_COL - 1; i++) {
-////            matrix[0][i] matrix[MAX_ROW - 1][i]
-//            for (Node sectorNode : matrix[0][i].sectorNodes) {
-//                for (int j = 0; j <= 1; j++) {
-//                    for (int k = i - 1; k <= i + 1; k++) {
-//                        connectNodes();
-//                    }
-//                }
-//            }
-//        }
-
-//        for (Node head : nodes.values()) {
-//            for (Node tail : nodes.values()) {
-//                if (head.getBusStop().isCloser(tail.getBusStop()) /*&&
-//                        !head.getBusStop().getBusName().equals(tail.getBusStop().getBusName())*/) {
-//                    head.addEdge(tail, head.getBusStop().distanceTo(tail.getBusStop()));
-//                }
-//            }
-//        }
     }
 
     private void connectNodes(Node head, List<Node> sectorNodes) {
