@@ -135,8 +135,8 @@ public class Graph {
     }
 
     public boolean isInTown(Coord position){
-        return position.getLng() <= TOP_RIGHT.getLng() && position.getLng() >= BOTTOM_LEFT.getLng() &&
-                position.getLat() <= TOP_RIGHT.getLat() && position.getLat() >= BOTTOM_LEFT.getLat(); // Lo cambiamos a menor y mayor igual porque no tomaba los casos limites
+        return Double.compare(position.getLng(),TOP_RIGHT.getLng()) <= 0 && Double.compare(position.getLng(),BOTTOM_LEFT.getLng()) >= 0  &&
+                Double.compare(position.getLat(),TOP_RIGHT.getLat()) <= 0 && Double.compare(position.getLat(),BOTTOM_LEFT.getLat()) >= 0; // Lo cambiamos a menor y mayor igual porque no tomaba los casos limites
     }
 
     private static class Sector {
