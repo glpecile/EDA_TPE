@@ -20,7 +20,7 @@ public class Controller {
         locations = new PlacesReader().getPlaces();
         busStops = new BusStopReader().getBusStops();
         busRoutes = new BusRouteReader().getBusRoutes();
-        Graph graph = new Graph(busStops, busRoutes);
+        Graph graph = new Graph(busStops, busRoutes, new Coord(-58.319693588930136, -34.51506436193081), new Coord(-58.5607209515051, -34.738332689908475));
         pathFinder = new PathFinder(graph);
         System.out.println("Tamaño values: " + graph.getNodes().values().size());
         List<BusStop> veintidosA = new ArrayList<>();

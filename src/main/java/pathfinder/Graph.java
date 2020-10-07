@@ -7,23 +7,32 @@ import model.Coord;
 import java.util.*;
 
 public class Graph {
-    public static final Coord TOP_RIGHT = new Coord(-58.30206850271441, -34.52854807880812);
-    public static final Coord BOTTOM_LEFT = new Coord(-58.4840559, -34.6343296);
+    public final Coord TOP_RIGHT;
+    public final Coord BOTTOM_LEFT;
     public static final double WALKING_DISTANCE = Coord.IS_CLOSER;
-    public static final int MAX_ROW = (int) (((TOP_RIGHT.getLat() - BOTTOM_LEFT.getLat()) / WALKING_DISTANCE) );
-    public static final int MAX_COL = (int) (((TOP_RIGHT.getLng() - BOTTOM_LEFT.getLng()) / WALKING_DISTANCE ) );
-    public static final double IS_IN_TOWN = (TOP_RIGHT.getLat() - BOTTOM_LEFT.getLat()) / MAX_ROW;
+    public final int MAX_ROW;
+    public final int MAX_COL;
+    public final double IS_IN_TOWN;
 
     private final Map<BusStop, Node> nodes;
-    private final Sector[][] matrix = new Sector[MAX_ROW][MAX_COL];
+    private final Sector[][] matrix;
 
-    public Graph(List<BusStop> busStops, List<BusRoute> busRoutes) {
+    public Graph(List<BusStop> busStops, List<BusRoute> busRoutes, Coord topRight, Coord bottomLeft) {
         nodes = new HashMap<>();
         generateNodes(busStops);
         generateEdges(busRoutes);
+        TOP_RIGHT = topRight;
+        BOTTOM_LEFT = bottomLeft;
+        MAX_ROW = (int) (((TOP_RIGHT.getLat() - BOTTOM_LEFT.getLat()) / WALKING_DISTANCE) );
+        MAX_COL = (int) (((TOP_RIGHT.getLng() - BOTTOM_LEFT.getLng()) / WALKING_DISTANCE ) );
+        IS_IN_TOWN = (TOP_RIGHT.getLat() - BOTTOM_LEFT.getLat()) / MAX_ROW;
+        matrix = new Sector[MAX_ROW][MAX_COL];
     }
 
     private void generateNodes(List<BusStop> busStops) {
+        System.out.println("MAX_ROW" + MAX_ROW);
+        System.out.println("MAX_COL" + MAX_COL);
+        System.out.println("---------------");
         for (BusStop busStop : busStops) {
             if(isInTown(busStop.getCoord())){
                 Node toAdd = new Node(busStop);
@@ -34,6 +43,7 @@ public class Graph {
 
                 System.out.println("Row:" + row);
                 System.out.println("Col:" + col);
+                System.out.println("---------------");
                 if(matrix[row][col] == null)
                     matrix[row][col] = new Sector();
                 matrix[row][col].addNode(toAdd);
@@ -65,13 +75,16 @@ public class Graph {
         for (int i = 0; i < MAX_ROW ; i++) {
             for (int j = 0; j <MAX_COL ; j++) {
 
-                List<Node> thisSectorNodes = matrix[i][j].sectorNodes;
-                for (Node node :
-                        thisSectorNodes) {
-                    for (int k = i - 1; k <= i + 1; k++) {
-                        for (int l = j - 1; l <= j + 1; l++) {
-                            if(k>=0 && k < MAX_ROW && l >= 0 && l<MAX_COL){
-                                connectNodes(node, matrix[k][l].sectorNodes);
+                if(matrix[i][j] != null){
+                    List<Node> thisSectorNodes = matrix[i][j].sectorNodes;
+                    for (Node node :
+                            thisSectorNodes) {
+                        for (int k = i - 1; k <= i + 1; k++) {
+                            for (int l = j - 1; l <= j + 1; l++) {
+                                if(k>=0 && k < MAX_ROW && l >= 0 && l<MAX_COL){
+                                    if(matrix[k][l] != null)
+                                        connectNodes(node, matrix[k][l].sectorNodes);
+                                }
                             }
                         }
                     }
@@ -108,11 +121,11 @@ public class Graph {
         );
     }
 
-    public static int rowIndex(double lat) {
+    public  int rowIndex(double lat) {
         return (int) ((TOP_RIGHT.getLat() - lat) / IS_IN_TOWN);
     }
 
-    public static int colIndex(double lng) {
+    public  int colIndex(double lng) {
         return (int) ((lng - BOTTOM_LEFT.getLng()) / IS_IN_TOWN);
     }
 
