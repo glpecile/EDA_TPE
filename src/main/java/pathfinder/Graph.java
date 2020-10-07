@@ -24,7 +24,7 @@ public class Graph {
         MAX_ROW = (int) (((TOP_RIGHT.getLat() - BOTTOM_LEFT.getLat()) / WALKING_DISTANCE) );
         MAX_COL = (int) (((TOP_RIGHT.getLng() - BOTTOM_LEFT.getLng()) / WALKING_DISTANCE ) );
         IS_IN_TOWN = (TOP_RIGHT.getLat() - BOTTOM_LEFT.getLat()) / MAX_ROW;
-        matrix = new Sector[MAX_ROW][MAX_COL];
+        matrix = new Sector[MAX_ROW+1][MAX_COL+1];
         generateNodes(busStops);
         generateEdges(busRoutes);
 
