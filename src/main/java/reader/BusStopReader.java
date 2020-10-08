@@ -31,7 +31,8 @@ public class BusStopReader {
     }
 
     /**
-     * Procesado y parseo de datos obtenidos del csv.
+     * Procesado y parseo de datos obtenidos del csv. Se guardan las coordenadas máximas y
+     * mínimas halladas para el uso si se desea en la construcción del grafo.
      *
      * @return Lista de las paradas de colectivos parseadas y procesadas para ser usados por
      * pathfinder.

@@ -1,5 +1,8 @@
 package model;
 
+/**
+ * Clase usada para mostrar un colectivo y manejar en el algoritmo de PathFinder.
+ */
 public class BusInPath {
     private final String name;
     private final double fromLat;
@@ -8,6 +11,16 @@ public class BusInPath {
     private double toLng;
     private double cost;
 
+    /**
+     * Crea una instancia de un recorrido de colectivo a mostrar.
+     *
+     * @param name,    nombre de la linea de colectivo.
+     * @param fromLat, latitud de donde comienza el recorrido.
+     * @param fromLng, longitud de donde comienza el recorrido.
+     * @param toLat,   latitud de donde finaliza el recorrido.
+     * @param toLng,   longitud de donde finaliza el recorrido.
+     * @param cost,    costo del recorrido.
+     */
     public BusInPath(String name, double fromLat, double fromLng, double toLat, double toLng, double cost) {
         this.name = name;
         this.fromLat = fromLat;
@@ -17,8 +30,18 @@ public class BusInPath {
         this.cost = cost;
     }
 
+    /**
+     * Crea una instancia de un recorrido de colectivo haciendo uso de la clase de Coord.
+     *
+     * @param name, nombre de la linea de colectivo.
+     * @param from, coordenadas de longitud y latitud de partida del recorrido presentes en la
+     *              clase Coord.
+     * @param to,   coordenadas de longitud y latitud de partida del recorrido presentes en la
+     *              clase Coord.
+     * @param cost, costo del recorrido.
+     */
     public BusInPath(String name, Coord from, Coord to, double cost) {
-        this(name,from.getLat(),from.getLng(),to.getLat(),to.getLng(),cost);
+        this(name, from.getLat(), from.getLng(), to.getLat(), to.getLng(), cost);
     }
 
     public String getName() {

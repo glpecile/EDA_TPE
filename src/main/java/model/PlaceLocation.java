@@ -1,19 +1,26 @@
 package model;
 
+/**
+ * Clase de localización de espacio cultural, es comparable para poder ser ordenada por nombre,
+ * luego por coordenadas si posee el mismo nombre.
+ */
 public class PlaceLocation implements Comparable<PlaceLocation> {
 
     private final double lat;
     private final double lng;
     private final String name;
 
+    /**
+     * Crea una instancia de un lugar, usada en su respectivo reader.
+     *
+     * @param name, nombre del lugar cultural.
+     * @param lat,  latitud donde se encuentra el lugar.
+     * @param lng,  longitud donde se encuentra el lugar.
+     */
     public PlaceLocation(String name, double lat, double lng) {
         this.name = name;
         this.lat = lat;
         this.lng = lng;
-    }
-
-    public PlaceLocation(String name) {
-        this(name, 0, 0);
     }
 
     public double getLat() {

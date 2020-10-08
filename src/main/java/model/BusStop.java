@@ -2,12 +2,23 @@ package model;
 
 import java.util.Objects;
 
+/**
+ * Clase usada para paradas de colectivos.
+ */
 public class BusStop {
     private final Coord coord;
     private final Integer directionId;
     private final String busName;
     private static final double TRANSFER_PENALTY = 0.5;
 
+    /**
+     * Crea una instancia de una parada de colectivo, usada en su respectivo reader.
+     *
+     * @param lng,         longitud donde se encuentra la parada.
+     * @param lat,         latitud donde se encuentra la parada.
+     * @param directionId, sentido en el que se dirige la parada.
+     * @param busName,     nombre de la línea del colectivo.
+     */
     public BusStop(Double lng, Double lat, Integer directionId, String busName) {
         coord = new Coord(lng, lat);
         this.directionId = directionId;
