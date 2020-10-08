@@ -3,14 +3,26 @@ package placefinder;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Método de búsqueda de coincidencias entre palabras.
+ */
 public class QGram {
 
     private final int n;
 
+    /**
+     * Crea un Qgram.
+     * @param n tamaños de los n-gramas para la búsqueda.
+     */
     public QGram(int n) {
         this.n = n;
     }
 
+    /**
+     * Genera los n-gramas del string que recibe.
+     * @param string, palabra a la que se le generan los n-gramas.
+     * @return Map con los n-gramas.
+     */
     public Map<String, Integer> generateGrams(String string) {
         string = addHashtag(string);
 
@@ -40,6 +52,12 @@ public class QGram {
         }
     }
 
+    /**
+     * Calcula la similitud entre dos strings.
+     * @param str1, palabra a la que se le calculará la similitud.
+     * @param str2, palabra a la que se le calculará la similitud.
+     * @return double valor de similaritud entre str1 y str2.
+     */
     public double similarity(String str1, String str2) {
         Map<String, Integer> token1 = generateGrams(str1);
         Map<String, Integer> token2 = generateGrams(str2);
