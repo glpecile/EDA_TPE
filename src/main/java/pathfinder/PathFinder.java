@@ -70,7 +70,7 @@ public class PathFinder {
 
             for (Edge edge : pqNode.node.getEdges()) {
                 double targetNodeCost = pqNode.cost + edge.getWeight();
-                boolean transfer = !pqNode.node.getBusStop().getBusName().equals(edge.getTail().getBusStop().getBusName());
+                boolean transfer = !pqNode.node.getBusStop().equalsLine(edge.getTail().getBusStop());
                 if (transfer) {
                     targetNodeCost += (pqNode.node.getBusStop().getTransferPenalty() + edge.getTail().getBusStop().getTransferPenalty());
                     targetNodeCost += walkingPenalty(pqNode.node.getBusStop().distanceTo(edge.getTail().getBusStop()));

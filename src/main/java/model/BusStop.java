@@ -38,6 +38,11 @@ public class BusStop {
         return this.coord.isCloser(other.getCoord());
     }
 
+    public boolean equalsLine(BusStop other) {
+        return this.busName.equals(other.busName) &&
+                this.directionId.equals(other.directionId);
+    }
+
     @Override
     public String toString() {
         return busName + "||" + coord.toString();
