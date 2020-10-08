@@ -88,7 +88,7 @@ public class PathFinder {
         }
 
         List<BusInPath> notFound = new ArrayList<>();
-        notFound.add(new BusInPath("No encontrado", from, to, 10));
+        notFound.add(new BusInPath("No encontrado.", from, to, 10));
         return notFound;
     }
 

@@ -7,29 +7,40 @@ import org.junit.jupiter.api.Test;
 
 public class BusInPathTester {
 
-    BusInPath busInPath;
-
-    @BeforeEach
-    void init() {
-        busInPath = new BusInPath("Bus", new Coord(0.0, 0.2), new Coord(-12.5, 7.25), 0);
-    }
-
+    BusInPath busInPath = new BusInPath("Bus", new Coord(0.0, 0.2), new Coord(-12.5, 7.25), 0);
 
     @Test
     void gettersTest() {
-        init();
         Assertions.assertEquals("Bus", busInPath.getName());
         Assertions.assertEquals(0.0, busInPath.getFromLng());
         Assertions.assertEquals(0.2,busInPath.getFromLat());
         Assertions.assertEquals(-12.5, busInPath.getToLng());
-        Assertions.assertEquals(7.5, busInPath.getToLat());
+        Assertions.assertEquals(7.25, busInPath.getToLat());
         Assertions.assertEquals(0.0, busInPath.getCost());
         Assertions.assertEquals(new Coord(-12.5, 7.25), busInPath.getToCoord());
     }
 
     @Test
-     void setTest() {
+     void settersTest() {
         busInPath.setToLat(25.123);
-        Assertions.assertEquals(25.123, );
+        Assertions.assertEquals(25.123, busInPath.getToLat());
+        busInPath.setToLng(-58.8753);
+        Assertions.assertEquals(-58.8753, busInPath.getToLng());
+        busInPath.setTo(new Coord(-4.2, 12.3));
+        Assertions.assertEquals(-4.2, busInPath.getToLng());
+        Assertions.assertEquals(12.3, busInPath.getToLat());
+        busInPath.setCost(1.45);
+        Assertions.assertEquals(1.45, busInPath.getCost());
+    }
+
+    @Test
+    void addCostTest() {
+        busInPath.addCost(3.1);
+        Assertions.assertEquals(3.1, busInPath.getCost());
+    }
+
+    @Test
+    void toStringTest() {
+        Assertions.assertEquals("Bus - 0,00000 =>", busInPath.toString());
     }
 }
