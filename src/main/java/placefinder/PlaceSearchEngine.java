@@ -14,12 +14,12 @@ public class PlaceSearchEngine {
 
         QGram qGram = new QGram(3);
 
-        for(PlaceLocation placeLocation : placeLocations) {
+        for (PlaceLocation placeLocation : placeLocations) {
             double similarity = qGram.similarity(place, placeLocation.getName());
-            if(similarity > 0) {
-                if(rankedPlaceLocationSet.size() < 10) {
+            if (similarity > 0) {
+                if (rankedPlaceLocationSet.size() < 10) {
                     rankedPlaceLocationSet.add(new RankedPlaceLocation(placeLocation, similarity));
-                } else if(Double.compare(similarity, rankedPlaceLocationSet.last().getqGramRanking()) > 0) {
+                } else if (Double.compare(similarity, rankedPlaceLocationSet.last().getqGramRanking()) > 0) {
                     rankedPlaceLocationSet.remove(rankedPlaceLocationSet.last());
                     rankedPlaceLocationSet.add(new RankedPlaceLocation(placeLocation, similarity));
                 }

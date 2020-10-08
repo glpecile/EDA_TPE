@@ -49,7 +49,7 @@ public class BusStop {
         if (o == null || getClass() != o.getClass()) return false;
         BusStop busStop = (BusStop) o;
         return coord.equals(busStop.coord) &&
-                (directionId.equals(busStop.directionId))&&
+                (directionId.equals(busStop.directionId)) &&
                 busName.equals(busStop.busName);
     }
 

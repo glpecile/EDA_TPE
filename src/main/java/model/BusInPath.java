@@ -16,6 +16,7 @@ public class BusInPath {
         this.toLng = toLng;
         this.cost = cost;
     }
+
     public BusInPath(String name, Coord from, Coord to, double cost) {
         this.name = name;
         this.fromLat = from.getLat();
@@ -61,7 +62,7 @@ public class BusInPath {
         this.toLng = toLng;
     }
 
-    public void setTo(Coord newTo){
+    public void setTo(Coord newTo) {
         setToLng(newTo.getLng());
         setToLat(newTo.getLat());
     }
@@ -74,6 +75,7 @@ public class BusInPath {
         this.cost += extra;
     }
 
+    @Override
     public String toString() {
         return String.format("%s - %g =>", name, cost);
     }

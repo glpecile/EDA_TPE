@@ -12,8 +12,6 @@ public class Coord {
     public Coord(double lng, double lat) {
         this.lng = Math.round(lng * ROUND) / ROUND;
         this.lat = Math.round(lat * ROUND) / ROUND;
-//        this.lat = lat;
-//        this.lng = lng;
     }
 
     public double getLng() {
@@ -26,11 +24,11 @@ public class Coord {
 
 
     public double distanceTo(Coord other) {
-        return Math.sqrt(Math.pow((this.lat-other.lat),2)+Math.pow((this.lng-other.lng),2));
+        return Math.sqrt(Math.pow((this.lat - other.lat), 2) + Math.pow((this.lng - other.lng), 2));
     }
 
     public boolean isCloser(Coord other) {
-        return (this.distanceTo(other) < IS_CLOSER );
+        return (this.distanceTo(other) < IS_CLOSER);
     }
 
     @Override

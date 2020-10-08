@@ -25,7 +25,7 @@ public class RankedPlaceLocation implements Comparable<RankedPlaceLocation> {
     @Override
     public int compareTo(RankedPlaceLocation otherPlace) {
         int cmp = Double.compare(otherPlace.getqGramRanking(), this.getqGramRanking());
-        if(cmp == 0) {
+        if (cmp == 0) {
             cmp = this.getPlaceLocation().compareTo(otherPlace.getPlaceLocation());
         }
         return cmp;
