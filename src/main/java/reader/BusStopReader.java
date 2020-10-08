@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * Clase para lectura de csv de paradas de colectivos. Se hace composición con ReadResources.
  */
 public class BusStopReader {
     @SuppressWarnings("all")
@@ -19,8 +19,11 @@ public class BusStopReader {
     private Double maxLat = (-1) * Double.MAX_VALUE, maxLng = (-1) * Double.MAX_VALUE, minLat = Double.MAX_VALUE, minLng = Double.MAX_VALUE;
 
     /**
+     * Crea una nueva instancia para poder leer el csv, su path es pasado a ReadResources como
+     * variable previamente definida. Los archivos son preparados para ser procesados.
      *
-     * @throws IOException
+     * @throws IOException Si no es posible encontrar el path del archivo es
+     *                     arrojada una excepción de tipo IO.
      */
     public BusStopReader() throws IOException {
         ReadResources resources = new ReadResources(filePath);
@@ -28,8 +31,10 @@ public class BusStopReader {
     }
 
     /**
+     * Procesado y parseo de datos obtenidos del csv.
      *
-     * @return
+     * @return Lista de las paradas de colectivos parseadas y procesadas para ser usados por
+     * pathfinder.
      */
     public List<BusStop> getBusStops() {
         busStopData.forEach(b -> {
