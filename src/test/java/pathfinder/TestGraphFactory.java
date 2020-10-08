@@ -9,40 +9,40 @@ import java.util.HashMap;
 import java.util.List;
 
 public class TestGraphFactory {
-    public static void main(String[] args) {
-        Graph graph = getTestGraph();
-        int i = 1;
-        for(Node node : graph.getNodes().values()) {
-            BusStop busStop = node.getBusStop();
-            System.out.printf("%d | Linea: %s | Lng: %g | Lat: %g\n", i++, busStop.getBusName(), busStop.getCoord().getLng(), busStop.getCoord().getLat());
-        }
-        System.out.println("------------------------");
-        Node firstBlack = graph.getNodes().get(new BusStop(0.000000,0.0000000,0, "Negro"));
-        i = 1;
-        for(Edge edge : firstBlack.getEdges()) {
-            BusStop busStop = edge.getTail().getBusStop();
-            double weight = edge.getWeight();
-            System.out.printf("%d | Línea: %s | Lng: %g | Lat: %g | Weight: %g\n",
-                    i++, busStop.getBusName(), busStop.getCoord().getLng(), busStop.getCoord().getLat(), weight);
-        }
-
-        System.out.println("------------------------");
-        PathFinder pathFinder = getPathFinder(graph);
-        pathFinder.findPath(new Coord(0.000000,0.000000), new Coord(0.011000,-0.011000)); //Negro 0.019 aprox
-        System.out.println("------------------------");
-//        pathFinder.findPath(new Coord(0.000000,0.000000), new Coord(0.02,0.0)); //Negro => Verde (CON EL GRAFO PEQUEÑO) 1.02402 creo
+//    public static void main(String[] args) {
+//        Graph graph = getTestGraph();
+//        int i = 1;
+//        for(Node node : graph.getNodes().values()) {
+//            BusStop busStop = node.getBusStop();
+//            System.out.printf("%d | Linea: %s | Lng: %g | Lat: %g\n", i++, busStop.getBusName(), busStop.getCoord().getLng(), busStop.getCoord().getLat());
+//        }
 //        System.out.println("------------------------");
-        //INVERTIR COORD
-        pathFinder.findPath(new Coord(0.010000, -0.002000), new Coord(0.014000, -0.014000)); //Rojo
-        System.out.println("------------------------");
-        pathFinder.findPath(new Coord(-0.007, 0.0), new Coord(0.015000, -0.015)); //Verde => Negro => Rojo
-        System.out.println("------------------------");
-        pathFinder.findPath(new Coord(0.014, 0.0), new Coord(-0.01, -0.016)); //Azul
-        System.out.println("------------------------");
-        pathFinder.findPath(new Coord(-0.002, 0.0), new Coord(0.012, -0.0075)); //Negro
-        System.out.println("------------------------");
-        pathFinder.findPath(new Coord(0.013, -0.004), new Coord(-0.009000, 0.002)); //Azul => Verde
-    }
+//        Node firstBlack = graph.getNodes().get(new BusStop(0.000000,0.0000000,0, "Negro"));
+//        i = 1;
+//        for(Edge edge : firstBlack.getEdges()) {
+//            BusStop busStop = edge.getTail().getBusStop();
+//            double weight = edge.getWeight();
+//            System.out.printf("%d | Línea: %s | Lng: %g | Lat: %g | Weight: %g\n",
+//                    i++, busStop.getBusName(), busStop.getCoord().getLng(), busStop.getCoord().getLat(), weight);
+//        }
+//
+//        System.out.println("------------------------");
+//        PathFinder pathFinder = getPathFinder(graph);
+//        pathFinder.findPath(new Coord(0.000000,0.000000), new Coord(0.011000,-0.011000)); //Negro 0.019 aprox
+//        System.out.println("------------------------");
+////        pathFinder.findPath(new Coord(0.000000,0.000000), new Coord(0.02,0.0)); //Negro => Verde (CON EL GRAFO PEQUEÑO) 1.02402 creo
+////        System.out.println("------------------------");
+//        //INVERTIR COORD
+//        pathFinder.findPath(new Coord(0.010000, -0.002000), new Coord(0.014000, -0.014000)); //Rojo
+//        System.out.println("------------------------");
+//        pathFinder.findPath(new Coord(-0.007, 0.0), new Coord(0.015000, -0.015)); //Verde => Negro => Rojo
+//        System.out.println("------------------------");
+//        pathFinder.findPath(new Coord(0.014, 0.0), new Coord(-0.01, -0.016)); //Azul
+//        System.out.println("------------------------");
+//        pathFinder.findPath(new Coord(-0.002, 0.0), new Coord(0.012, -0.0075)); //Negro
+//        System.out.println("------------------------");
+//        pathFinder.findPath(new Coord(0.013, -0.004), new Coord(-0.009000, 0.002)); //Azul => Verde
+//    }
 
     public static Graph getTestGraph() {
         List<BusStop> busStops = new ArrayList<>();
