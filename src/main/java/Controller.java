@@ -27,11 +27,6 @@ public class Controller {
         // Bottom_Left: new Coord(-58.5607209515051, -34.738332689908475)
         Graph graph = new Graph(busStops, busRoutes, subwayStops, new Coord(-58.319693588930136, -34.51506436193081), new Coord(-58.5607209515051, -34.738332689908475));
         pathFinder = new PathFinder(graph);
-
-        System.out.println("Tamaño values: " + graph.getNodes().values().size());
-        int[] edges = {0};
-        graph.getNodes().values().forEach(val -> edges[0] += val.getEdges().size());
-        System.out.println("Aristas totales: " + edges[0]);
     }
 
     public List<BusInPath> findPath(double fromLat, double fromLng, double toLat, double toLng) {
@@ -39,7 +34,6 @@ public class Controller {
     }
 
     public List<PlaceLocation> findPlaces(String searchTerm) {
-        //return new ArrayList<>(PlaceSearchEngine.getSimilarity(locations, searchTerm.toUpperCase()));
         return (PlaceSearchEngine.getSimilarity(locations, searchTerm.toUpperCase()));
     }
 }

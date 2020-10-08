@@ -37,7 +37,6 @@ public class BusRouteReader {
      */
     public List<BusRoute> getBusRoutes() {
         busRouteData.forEach(b -> busRoutes.add(new BusRoute(b[4], Integer.parseInt(b[1]), generateCoords(b[14]))));
-        System.out.println("Tamaño busRoutes: " + busRoutes.size());
         return busRoutes;
     }
 

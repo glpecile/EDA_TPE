@@ -55,7 +55,6 @@ public class BusStopReader {
             }
             busStops.add(new BusStop(busLng, busLat, Integer.parseInt(b[5]), b[8]));
         });
-        System.out.println("Tamaño busStops: " + busStops.size());
         return busStops;
     }
 

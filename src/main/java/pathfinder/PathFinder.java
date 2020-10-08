@@ -35,8 +35,6 @@ public class PathFinder {
      * @return List con los colectivos que el usuario debe tomar para realizar el camino óptimo.
      */
     public List<BusInPath> findPath(Coord from, Coord to) {
-        long tInicial = System.currentTimeMillis();
-
         if (from.isCloser(to)) {
             return Collections.singletonList(new BusInPath("Camine.", from, to, from.distanceTo(to)));
         }
@@ -46,12 +44,7 @@ public class PathFinder {
             return Collections.singletonList(new BusInPath("No hay paradas cercanas.", from, to, 10));
         }
 
-        List<BusInPath> bus = Dijkstra(closestStartStops, from, to);
-        System.out.println(bus);
-
-        long tFinal = System.currentTimeMillis();
-        System.out.println("Tiempo de Busqueda: " + (((double) (tFinal - tInicial)) / 1000.0));
-        return bus;
+        return Dijkstra(closestStartStops, from, to);
     }
 
     /**
