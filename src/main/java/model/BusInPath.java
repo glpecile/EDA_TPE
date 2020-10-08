@@ -18,12 +18,7 @@ public class BusInPath {
     }
 
     public BusInPath(String name, Coord from, Coord to, double cost) {
-        this.name = name;
-        this.fromLat = from.getLat();
-        this.fromLng = from.getLng();
-        this.toLat = to.getLat();
-        this.toLng = to.getLng();
-        this.cost = cost;
+        this(name,from.getLat(),from.getLng(),to.getLat(),to.getLng(),cost);
     }
 
     public String getName() {

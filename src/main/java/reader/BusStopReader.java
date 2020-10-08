@@ -8,7 +8,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ *
+ */
 public class BusStopReader {
     @SuppressWarnings("all")
     private final String filePath = "src/main/resources/paradas-de-colectivo.csv";
@@ -16,11 +18,19 @@ public class BusStopReader {
     private final List<BusStop> busStops = new ArrayList<>();
     private Double maxLat = (-1) * Double.MAX_VALUE, maxLng = (-1) * Double.MAX_VALUE, minLat = Double.MAX_VALUE, minLng = Double.MAX_VALUE;
 
+    /**
+     *
+     * @throws IOException
+     */
     public BusStopReader() throws IOException {
         ReadResources resources = new ReadResources(filePath);
         busStopData = resources.gettingFileReady();
     }
 
+    /**
+     *
+     * @return
+     */
     public List<BusStop> getBusStops() {
         busStopData.forEach(b -> {
             double busLng = Double.parseDouble(b[4]);

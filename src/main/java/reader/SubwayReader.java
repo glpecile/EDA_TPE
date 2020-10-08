@@ -14,11 +14,19 @@ public class SubwayReader {
     private final List<String[]> subwayData;
     private final Map<String, List<SubwayStop>> subwayStops = new HashMap<>();
 
+    /**
+     *
+     * @throws IOException
+     */
     public SubwayReader() throws IOException {
         ReadResources resources = new ReadResources(filePath);
         subwayData = resources.gettingFileReady();
     }
 
+    /**
+     *
+     * @return
+     */
     public Map<String, List<SubwayStop>> getSubwayStops() {
         subwayData.forEach(s -> {
             SubwayStop subwayStop = new SubwayStop(Double.parseDouble(s[0]), Double.parseDouble(s[1]), s[4]);
