@@ -25,12 +25,13 @@ public class PathFinder {
         if (from.isCloser(to)) {
             return Collections.singletonList(new BusInPath("Camine.", from, to, from.distanceTo(to)));
         }
-        List<Node> closestStartStops = new ArrayList<>();
+        List<Node> closestStartStops = graph.getClosest(from);
+       /* List<Node> closestStartStops = new ArrayList<>();
         graph.getNodes().forEach((stop, node) -> {
             if (stop.getCoord().isCloser(from)) {
                 closestStartStops.add(node);
             }
-        });// aca podriamos hacer lo de busqueda por los sectores para hacerlo mas eficiente
+        });// aca podriamos hacer lo de busqueda por los sectores para hacerlo mas eficiente*/
         if (closestStartStops.isEmpty()) {
             return Collections.singletonList(new BusInPath("No hay paradas cercanas.", from, to, 10));
         }

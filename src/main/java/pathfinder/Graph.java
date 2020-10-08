@@ -117,7 +117,27 @@ public class Graph {
                 }
         );
     }
-
+    public List<Node> getClosest(Coord location){
+        List<Node> toReturn = new ArrayList<>();
+        int row = rowIndex(location.getLat());
+        int col = colIndex(location.getLng());
+        if(matrix[row][col] != null){
+            matrix[row][col].sectorNodes.forEach(node -> {
+                for (int k = row - 1; k <= row + 1; k++) {
+                    for (int l = col - 1; l <= col + 1; l++) {
+                        if (k >= 0 && k < MAX_ROW && l >= 0 && l < MAX_COL && matrix[k][l] != null) {
+                            matrix[k][l].sectorNodes.forEach((closest) -> {
+                                if(location.isCloser(closest.getBusStop().getCoord())){
+                                    toReturn.add(closest);
+                                }
+                            });
+                        }
+                    }
+                }
+            });
+        }
+        return toReturn;
+    }
 
     private static class Sector {
         private final List<Node> sectorNodes;
