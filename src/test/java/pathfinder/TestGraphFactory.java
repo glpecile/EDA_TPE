@@ -48,7 +48,7 @@ public class TestGraphFactory {
         List<BusStop> busStops = new ArrayList<>();
         List<BusRoute> busRoutes = new ArrayList<>(); //Puede estar vacio. Se crean las aristas por proximidad.
         generateBusStops(busStops);
-        return new Graph(busStops, busRoutes, new Coord(0.018,0.00), new Coord(-0.018,-0.018));
+        return new Graph(busStops, busRoutes, null, new Coord(0.018,0.00), new Coord(-0.018,-0.018));
     }
 
     public static PathFinder getPathFinder(Graph graph) {

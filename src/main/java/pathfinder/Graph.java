@@ -3,6 +3,7 @@ package pathfinder;
 import model.BusRoute;
 import model.BusStop;
 import model.Coord;
+import model.SubwayStop;
 
 import java.util.*;
 
@@ -12,51 +13,54 @@ public class Graph {
     public static final double WALKING_DISTANCE = Coord.IS_CLOSER;
     public final int MAX_ROW;
     public final int MAX_COL;
-    public final double IS_IN_TOWN;
+    //public final double IS_IN_TOWN;
 
     private final Map<BusStop, Node> nodes;
     private final Sector[][] matrix;
 
-    public Graph(List<BusStop> busStops, List<BusRoute> busRoutes, Coord topRight, Coord bottomLeft) {
+    public Graph(List<BusStop> busStops, List<BusRoute> busRoutes, Map<String, List<SubwayStop>> subwayStops, Coord topRight, Coord bottomLeft) {
         nodes = new HashMap<>();
         TOP_RIGHT = topRight;
         BOTTOM_LEFT = bottomLeft;
-        MAX_ROW = (int) (((TOP_RIGHT.getLat() - BOTTOM_LEFT.getLat()) / WALKING_DISTANCE) );
-        MAX_COL = (int) (((TOP_RIGHT.getLng() - BOTTOM_LEFT.getLng()) / WALKING_DISTANCE ) );
-        IS_IN_TOWN = (TOP_RIGHT.getLat() - BOTTOM_LEFT.getLat()) / MAX_ROW;
-        matrix = new Sector[MAX_ROW+1][MAX_COL+1];
-        generateNodes(busStops);
-        generateEdges(busRoutes);
+        MAX_ROW = (int) (((TOP_RIGHT.getLat() - BOTTOM_LEFT.getLat()) / WALKING_DISTANCE) + 1);
+        MAX_COL = (int) (((TOP_RIGHT.getLng() - BOTTOM_LEFT.getLng()) / WALKING_DISTANCE ) + 1);
+        //IS_IN_TOWN = (TOP_RIGHT.getLat() - BOTTOM_LEFT.getLat()) / MAX_ROW; No hace falta
+        matrix = new Sector[MAX_ROW][MAX_COL];
 
+        generateNodes(busStops ,subwayStops);
+//        generateSubwayStopNodes(subwayStops);
+        generateEdges(busRoutes, subwayStops);
     }
 
-    private void generateNodes(List<BusStop> busStops) {
+    private void generateNodes(List<BusStop> busStops, Map<String, List<SubwayStop>> subwayStops) {
         System.out.println("MAX_ROW: " + MAX_ROW);
         System.out.println("MAX_COL: " + MAX_COL);
         System.out.println("---------------");
+        addNodes(busStops);
+        for(List<SubwayStop> subwayStopList : subwayStops.values()) {
+            addNodes(subwayStopList);
+        }
+    }
+
+    private void addNodes(List<? extends BusStop> busStops) {
         for (BusStop busStop : busStops) {
             if(isInTown(busStop.getCoord())){
                 Node toAdd = new Node(busStop);
                 nodes.putIfAbsent(busStop, toAdd);
-
                 int row = rowIndex(busStop.getCoord().getLat());
                 int col = colIndex(busStop.getCoord().getLng());
-
-//                System.out.println("Row:" + row);
-//                System.out.println("Col:" + col);
-//                System.out.println("---------------");
                 if(matrix[row][col] == null)
                     matrix[row][col] = new Sector();
                 matrix[row][col].addNode(toAdd);
             }
-
-
-
         }
-
     }
+//
+//    private void generateSubwayStopNodes(Map<String, List<SubwayStop>> subwayStops) {
 
-    private void generateEdges(List<BusRoute> busRoutes) {
+//    }
+
+    private void generateEdges(List<BusRoute> busRoutes, Map<String, List<SubwayStop>> subwayStops) {
         for (BusRoute busRoute : busRoutes) {
             int i = 0;
             BusStop head = null;
@@ -75,22 +79,28 @@ public class Graph {
         }
         for (int i = 0; i < MAX_ROW ; i++) {
             for (int j = 0; j <MAX_COL ; j++) {
-
                 if(matrix[i][j] != null){
-                    List<Node> thisSectorNodes = matrix[i][j].sectorNodes;
-                    for (Node node :
-                            thisSectorNodes) {
-                        for (int k = i - 1; k <= i + 1; k++) {
-                            for (int l = j - 1; l <= j + 1; l++) {
+                    int indexI = i, indexJ = j;
+                    matrix[i][j].sectorNodes.forEach(node -> {
+                        for (int k = indexI - 1; k <= indexI + 1; k++) {
+                            for (int l = indexJ - 1; l <= indexJ + 1; l++) {
                                 if(k>=0 && k < MAX_ROW && l >= 0 && l<MAX_COL && matrix[k][l] != null){
                                     connectNodes(node, matrix[k][l].sectorNodes);
                                 }
                             }
                         }
-                    }
+                    });
                 }
             }
         }
+
+        subwayStops.values().forEach(subwayLine -> {
+            subwayLine.forEach(subwayStop -> {
+                subwayLine.forEach(tail -> {
+                    nodes.get(subwayStop).addEdge(nodes.get(tail), subwayStop.distanceTo(tail) / 2);
+                });
+            });
+        });
     }
 
     private void connectNodes(Node head, List<Node> sectorNodes) {
@@ -103,11 +113,11 @@ public class Graph {
     }
 
     public  int rowIndex(double lat) {
-        return (int) ((TOP_RIGHT.getLat() - lat) / IS_IN_TOWN);
+        return (int) ((TOP_RIGHT.getLat() - lat) / WALKING_DISTANCE);
     }
 
     public  int colIndex(double lng) {
-        return (int) ((lng - BOTTOM_LEFT.getLng()) / IS_IN_TOWN);
+        return (int) ((lng - BOTTOM_LEFT.getLng()) / WALKING_DISTANCE);
     }
 
     public Map<BusStop, Node> getNodes() {

@@ -6,6 +6,7 @@ public class BusStop {
     private final Coord coord;
     private final Integer directionId;
     private final String busName;
+    private static final double TRANSFER_PENALTY = 0.5;
 
     public BusStop(Double lng, Double lat, Integer directionId, String busName) {
         coord = new Coord(lng, lat);
@@ -25,9 +26,10 @@ public class BusStop {
         return busName;
     }
 
-    /*
-    SE AÑADEN NUEVOS METODOS PARA NO ACCEDER A LA COORDENADA Y ACORTAR CODIGO
-     */
+    public double getTransferPenalty() {
+        return TRANSFER_PENALTY;
+    }
+
     public double distanceTo(BusStop other) {
         return this.coord.distanceTo(other.getCoord());
     }
@@ -35,8 +37,6 @@ public class BusStop {
     public boolean isCloser(BusStop other) {
         return this.coord.isCloser(other.getCoord());
     }
-
-
 
     @Override
     public String toString() {

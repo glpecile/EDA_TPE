@@ -40,6 +40,7 @@ public class PathFinder {
 //            buses.putIfAbsent(busCost.getCost(),bus); //Si el start esta donde no hay paradas cercanas da nullPointerException
 //        });
         List<BusInPath> bus = Dijkstra(closestStartStops,from,to);
+        System.out.println(bus);
 //        System.out.println(buses.values().size());
 //        Collection<List<BusInPath>> path = buses.values();
 //        for(List<BusInPath> list : path) {
@@ -82,7 +83,7 @@ public class PathFinder {
                 double targetNodeCost = pqNode.cost + edge.getWeight();
                 boolean transfer = !pqNode.node.getBusStop().getBusName().equals(edge.getTail().getBusStop().getBusName());
                 if(transfer) {
-                    targetNodeCost += TRANSFER_PENALTY;
+                    targetNodeCost += (pqNode.node.getBusStop().getTransferPenalty() + edge.getTail().getBusStop().getTransferPenalty());
                     targetNodeCost += walkingPenalty(pqNode.node.getBusStop().distanceTo(edge.getTail().getBusStop()));
                 }
                 if (targetNodeCost < edge.getTail().getCost()) {
