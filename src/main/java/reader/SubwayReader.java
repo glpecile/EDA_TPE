@@ -8,6 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Clase para lectura de csv de subtes. Se hace composición con ReadResources.
+ */
 public class SubwayReader {
     @SuppressWarnings("all")
     private final String filePath = "src/main/resources/estaciones-de-subte.csv";
@@ -15,8 +18,11 @@ public class SubwayReader {
     private final Map<String, List<SubwayStop>> subwayStops = new HashMap<>();
 
     /**
+     * Crea una nueva instancia para poder leer el csv, su path es pasado a ReadResources como
+     * variable previamente definida. Los archivos son preparados para ser procesados.
      *
-     * @throws IOException
+     * @throws IOException Si no es posible encontrar el path del archivo es
+     *                     arrojada una excepción de tipo IO.
      */
     public SubwayReader() throws IOException {
         ReadResources resources = new ReadResources(filePath);
@@ -24,8 +30,10 @@ public class SubwayReader {
     }
 
     /**
+     * Procesado y parseo de datos obtenidos del csv.
      *
-     * @return
+     * @return Mapa con llave de tipo String con el nombre de la linea y de valor las paradas de
+     * subte parseadas y procesadas para ser usados por pathfinder.
      */
     public Map<String, List<SubwayStop>> getSubwayStops() {
         subwayData.forEach(s -> {

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- *
+ * Clase para lectura de csv de espacios culturales. Se hace composición con ReadResources.
  */
 public class PlacesReader {
     @SuppressWarnings("all")
@@ -17,8 +17,11 @@ public class PlacesReader {
     Set<PlaceLocation> placesSet = new HashSet<>();
 
     /**
+     * Crea una nueva instancia para poder leer el csv, su path es pasado a ReadResources como
+     * variable previamente definida. Los archivos son preparados para ser procesados.
      *
-     * @throws IOException
+     * @throws IOException Si no es posible encontrar el path del archivo es
+     *                     arrojada una excepción de tipo IO.
      */
     public PlacesReader() throws IOException {
         ReadResources resources = new ReadResources(filePath);
@@ -26,8 +29,9 @@ public class PlacesReader {
     }
 
     /**
+     * Procesado y parseo de datos obtenidos del csv.
      *
-     * @return
+     * @return Set de lugares parseados y procesados para ser usados por placefinder.
      */
     public Set<PlaceLocation> getPlaces() {
         placesData.forEach(p -> placesSet.add(new PlaceLocation(p[3], Double.parseDouble(p[13]), Double.parseDouble(p[14]))));
