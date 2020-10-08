@@ -39,6 +39,7 @@ public class Controller {
     }
 
     public List<PlaceLocation> findPlaces(String searchTerm) {
-        return new ArrayList<>(PlaceSearchEngine.getSimilarity(locations, searchTerm.toUpperCase()));
+        //return new ArrayList<>(PlaceSearchEngine.getSimilarity(locations, searchTerm.toUpperCase()));
+        return (PlaceSearchEngine.getSimilarity(locations, searchTerm.toUpperCase()));
     }
 }

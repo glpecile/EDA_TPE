@@ -67,16 +67,6 @@ public class TestGraphFactory {
         }
         line.add(new SubwayStop(0.015000,-0.015000,"Rojo"));
         subwayStops.put("Rojo" , line);
-
-        //MINI GRAFO
-//        busStops.add(new BusStop(0.000000,0.0000000,0, "Negro"));
-//        busStops.add(new BusStop(0.004000,0.0000,0, "Negro"));
-//        busStops.add(new BusStop(0.008000,0.00000,0, "Negro"));
-//
-//        busStops.add(new BusStop(0.012000,0.000000,0, "Verde"));
-//        busStops.add(new BusStop(0.016000,0.000,0, "Verde"));
-//        busStops.add(new BusStop(0.020000,0.000,0, "Verde"));
-
     }
 
     public static LinkedList<Coord> routeFactory() {

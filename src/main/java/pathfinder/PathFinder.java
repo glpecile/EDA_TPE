@@ -8,9 +8,17 @@ import java.util.Collections;
 import java.util.List;
 import java.util.PriorityQueue;
 
+/**
+ * Clase que modela un buscador de caminos en un grafo.
+ */
 public class PathFinder {
     private final Graph graph;
 
+    /**
+     * Crea un buscador.
+     *
+     * @param graph, grafo donde se van a realizar las búsquedas de caminos
+     */
     public PathFinder(Graph graph) {
         this.graph = graph;
     }
@@ -19,6 +27,13 @@ public class PathFinder {
         graph.getNodes().values().forEach(Node::unmark);
     }
 
+    /**
+     * Encuentra el mínimo camino entre los puntos from y to.
+     *
+     * @param from, lugar de inicio.
+     * @param to,   lugar de destino.
+     * @return List con los colectivos que el usuario debe tomar para realizar el camino óptimo.
+     */
     public List<BusInPath> findPath(Coord from, Coord to) {
         long tInicial = System.currentTimeMillis();
 
@@ -26,15 +41,11 @@ public class PathFinder {
             return Collections.singletonList(new BusInPath("Camine.", from, to, from.distanceTo(to)));
         }
         List<Node> closestStartStops = graph.getClosest(from);
-       /* List<Node> closestStartStops = new ArrayList<>();
-        graph.getNodes().forEach((stop, node) -> {
-            if (stop.getCoord().isCloser(from)) {
-                closestStartStops.add(node);
-            }
-        });// aca podriamos hacer lo de busqueda por los sectores para hacerlo mas eficiente*/
+
         if (closestStartStops.isEmpty()) {
             return Collections.singletonList(new BusInPath("No hay paradas cercanas.", from, to, 10));
         }
+
         List<BusInPath> bus = Dijkstra(closestStartStops, from, to);
         System.out.println(bus);
 
@@ -43,6 +54,14 @@ public class PathFinder {
         return bus;
     }
 
+    /**
+     * Algoritmo de Dijkstra que encuentra caminos mínimos.
+     *
+     * @param startingBusStops, nodos iniciales que el algoritmo usa para iniciar la búsqueda.
+     * @param from,             lugar de inicio.
+     * @param to,               lugar de destino.
+     * @return List con los colectivos que el usuario debe tomar para realizar el camino óptimo.
+     */
     // Complejidad: O((N+M)*log(N)).
     private List<BusInPath> Dijkstra(List<Node> startingBusStops, Coord from, Coord to) {
         unmarkAllNodes();
@@ -93,15 +112,31 @@ public class PathFinder {
         return notFound;
     }
 
+    /**
+     * Función que penaliza la distancia caminada.
+     *
+     * @param walkingDistance, distancia que el usuario debe caminar.
+     * @return double que indica la penalidad por caminar.
+     */
     private double walkingPenalty(double walkingDistance) {
         return Math.pow(Math.E, walkingDistance) - 1;
     }
 
+    /**
+     * Clase que modela un nodo para una cola de prioridad.
+     */
     private static class PqNode implements Comparable<PqNode> {
         private final Node node;
         private final double cost;
         private final List<BusInPath> busesInPath;
 
+        /**
+         * Crea un nodo de prioridad.
+         *
+         * @param node, nodo.
+         * @param path, camino realizado por el nodo.
+         * @param cost, costo por realizar el camino.
+         */
         public PqNode(Node node, List<BusInPath> path, double cost) {
             this.node = node;
             this.cost = cost;

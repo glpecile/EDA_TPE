@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 public class QGramTest {
 
     @Test
-    public void SimilarityTest() {
+    void SimilarityTest() {
         QGram triGram = new QGram(3);
         Assertions.assertTrue(Math.abs(0.3636 - triGram.similarity("JOHN", "JOE")) < 0.0001);
         QGram twoGram = new QGram(2);
