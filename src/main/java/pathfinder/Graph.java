@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Clase que modela un grafo dirigido con peso
+ * Clase que modela un grafo dirigido con peso.
  */
 public class Graph {
     public final Coord TOP_RIGHT;
@@ -31,9 +31,9 @@ public class Graph {
      * @param busStops,    List que contiene las paradas de colectivo, representa nodos.
      * @param busRoutes,   List que contiene las rutas de cada colectivo.
      * @param subwayStops, Map que contiene las líneas de subte con cada estación, que representa
-     *                    un nodo.
+     *                     un nodo.
      * @param topRight,    Coord que representa el límite superior derecho de la ubicación de los
-     *                    nodos.
+     *                     nodos.
      * @param bottomLeft,  Coord que representa el límite inferior izquiedo de la ubicación de
      *                     los nodos.
      */
@@ -81,7 +81,7 @@ public class Graph {
      */
     public boolean isInTown(Coord position) {
         return Double.compare(position.getLng(), TOP_RIGHT.getLng()) <= 0 && Double.compare(position.getLng(), BOTTOM_LEFT.getLng()) >= 0 &&
-                Double.compare(position.getLat(), TOP_RIGHT.getLat()) <= 0 && Double.compare(position.getLat(), BOTTOM_LEFT.getLat()) >= 0; // Lo cambiamos a menor y mayor igual porque no tomaba los casos limites
+                Double.compare(position.getLat(), TOP_RIGHT.getLat()) <= 0 && Double.compare(position.getLat(), BOTTOM_LEFT.getLat()) >= 0;
     }
 
     /**
@@ -214,7 +214,8 @@ public class Graph {
         private final List<Node> sectorNodes;
 
         /**
-         * Crea un sector en la matriz. Cada sector está asociado a unas coordenadas geográficas, y tiene una lista de nodos.
+         * Crea un sector en la matriz. Cada sector está asociado a unas coordenadas geográficas,
+         * y tiene una lista de nodos.
          */
         public Sector() {
             this.sectorNodes = new ArrayList<>();

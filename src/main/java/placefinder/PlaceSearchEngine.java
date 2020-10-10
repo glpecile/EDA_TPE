@@ -27,10 +27,11 @@ public class PlaceSearchEngine {
         for (PlaceLocation placeLocation : placeLocations) {
             double similarity = qGram.similarity(place, placeLocation.getName());
             if (similarity > 0) {
-                if (rankedPlaceLocationSet.size() < 10) {
-                    rankedPlaceLocationSet.add(new RankedPlaceLocation(placeLocation, similarity));
-                } else if (Double.compare(similarity, rankedPlaceLocationSet.last().getqGramRanking()) > 0) {
+                if (rankedPlaceLocationSet.size() >= 10 && Double.compare(similarity,
+                        rankedPlaceLocationSet.last().getqGramRanking()) > 0) {
                     rankedPlaceLocationSet.remove(rankedPlaceLocationSet.last());
+                }
+                if (rankedPlaceLocationSet.size() < 10) {
                     rankedPlaceLocationSet.add(new RankedPlaceLocation(placeLocation, similarity));
                 }
             }

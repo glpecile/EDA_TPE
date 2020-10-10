@@ -39,8 +39,4 @@ public class BusInPathTester {
         Assertions.assertEquals(3.1, busInPath.getCost());
     }
 
-    @Test
-    void toStringTest() {
-        Assertions.assertEquals("Bus - 0,00000 =>", busInPath.toString());
-    }
 }

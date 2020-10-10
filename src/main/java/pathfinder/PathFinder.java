@@ -17,7 +17,7 @@ public class PathFinder {
     /**
      * Crea un buscador.
      *
-     * @param graph, grafo donde se van a realizar las búsquedas de caminos
+     * @param graph, grafo donde se van a realizar las búsquedas de caminos.
      */
     public PathFinder(Graph graph) {
         this.graph = graph;
@@ -48,14 +48,14 @@ public class PathFinder {
     }
 
     /**
-     * Algoritmo de Dijkstra que encuentra caminos mínimos.
+     * Algoritmo de Dijkstra que encuentra caminos mínimos. Complejidad: O((N+M)*log(N)),
+     * detallada en el informe.
      *
      * @param startingBusStops, nodos iniciales que el algoritmo usa para iniciar la búsqueda.
      * @param from,             lugar de inicio.
      * @param to,               lugar de destino.
      * @return List con los colectivos que el usuario debe tomar para realizar el camino óptimo.
      */
-    // Complejidad: O((N+M)*log(N)).
     private List<BusInPath> Dijkstra(List<Node> startingBusStops, Coord from, Coord to) {
         unmarkAllNodes();
         graph.getNodes().values().forEach(node -> node.setCost(Double.MAX_VALUE));
